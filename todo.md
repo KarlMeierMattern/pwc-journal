@@ -1,9 +1,15 @@
 You can begin templating:
 
-[❌] Frontend setup (apps/frontend)
-[❌] Backend Express server with base routing (apps/backend)
+[✅] Frontend setup (apps/frontend)
+[✅] Backend Express server with base routing (apps/backend)
+[✅] API route scaffolding (/routes/logs.ts, /routes/summaries.ts)
 [❌] Shared UI and utilities (packages/ui, packages/utils)
-[❌] API route scaffolding (/routes/logs.ts, /routes/summaries.ts)
+[❌] Database setup (MySQL)
+[❌] Redis setup
+[❌] Docker setup
+[❌] GitHub Actions setup
+[❌] Coolify setup
+[❌] Deployment setup
 
 ## Templatised Starting Points
 

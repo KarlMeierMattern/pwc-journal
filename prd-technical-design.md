@@ -101,40 +101,16 @@ project-root/
 
 ## API Routes
 
-```
-
-Method
-Endpoint
-Description
-POST
-/auth/signup
-Create user
-POST
-/auth/login
-Login user
-POST
-/auth/logout
-Logout user
-GET
-/auth/me
-Get current user
-GET
-/journal
-List journal entries (filters)
-POST
-/journal
-Create journal entry
-PUT
-/journal/:id
-Update journal entry
-DELETE
-/journal/:id
-Delete journal entry
-GET
-/summary
-Get LLM summary by date range
-
-```
+Method | Endpoint | Description
+POST | /auth/signup | Create user
+POST | /auth/login | Login user
+POST | /auth/logout | Logout user
+GET | /auth/me | Get current user
+GET | /journal | List journal entries (filters)
+POST | /journal | Create journal entry
+PUT | /journal/:id | Update journal entry
+DELETE | /journal/:id | Delete journal entry
+GET | /summary | Get LLM summary by date range
 
 ## Caching Strategy
 
