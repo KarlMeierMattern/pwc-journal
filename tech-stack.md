@@ -30,8 +30,7 @@
 
 ## Infrastructure & Hosting
 
-- **Server:** Hetzner VPS (Ubuntu)
-- **Containerization:** Docker (frontend, backend, MySQL)
+- **Server:** Hetzner VPS
 - **Management:** Coolify for container orchestration, environment vars, logs, deployments
 - **Reverse Proxy:** NGINX (managed by Coolify)
 - **Process Manager:** PM2 (optional fallback)

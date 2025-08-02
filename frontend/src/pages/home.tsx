@@ -9,6 +9,8 @@ type Data = {
 
 const Home = () => {
   const [data, setData] = useState<Data | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,12 +18,17 @@ const Home = () => {
         const response = await fetch("http://localhost:3000/api/v1");
         const data = await response.json();
         setData(data);
+        setLoading(false);
       } catch (error) {
-        console.log(error);
+        setError(error instanceof Error ? error.message : "An error occurred");
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
