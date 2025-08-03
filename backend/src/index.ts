@@ -12,7 +12,7 @@ import router from "./routes/index.js";
 
 // Initialize Express
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // connect db
 
@@ -22,8 +22,8 @@ const port = 3000;
 
 const allowedOrigins =
   process.env.NODE_ENV === "development"
-    ? process.env.FRONTEND_DEV_URL
-    : process.env.FRONTEND_PROD_URL;
+    ? [process.env.FRONTEND_DEV_URL, "http://localhost:5173"]
+    : [process.env.FRONTEND_PROD_URL].filter(Boolean); // removes falsy values
 
 console.log("NODE_ENV:", process.env.NODE_ENV);
 console.log("Allowed Origins:", allowedOrigins);
