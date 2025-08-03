@@ -37,7 +37,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Fetched data:</h1>
+      <h1 className="text-3xl font-bold underline">Test fetched data:</h1>
       <h1 className="text-xl ">{data?.title}</h1>
     </div>
   );
