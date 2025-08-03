@@ -12,12 +12,15 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiURL =
+    import.meta.env.VITE_ENV === "development"
+      ? import.meta.env.VITE_BACKEND_DEV_URL
+      : import.meta.env.VITE_BACKEND_PROD_URL;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${apiUrl}/api/v1`);
+        const response = await fetch(`${apiURL}/api/v1`);
         const data = await response.json();
         setData(data);
         setLoading(false);
