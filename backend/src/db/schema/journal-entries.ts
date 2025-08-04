@@ -1,7 +1,7 @@
 import {
   mysqlTable,
   serial,
-  int,
+  bigint,
   text,
   timestamp,
 } from "drizzle-orm/mysql-core";
@@ -9,7 +9,7 @@ import { users } from "./users";
 
 export const journalEntries = mysqlTable("journal_entries", {
   id: serial().primaryKey(),
-  userId: int()
+  userId: bigint({ mode: "number", unsigned: true })
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   content: text().notNull(),

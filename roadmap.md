@@ -352,8 +352,10 @@ MYSQL_PASSWORD=your_password
 
 ## Deployment Notes
 
-1. **Database Setup**: Create MySQL database on your VPS or use managed MySQL
-2. **Redis Setup**: Install Redis on VPS or use managed Redis service
+1. **Database Setup**:
+   - **Development**: Use Docker MySQL container locally
+   - **Production**: Create MySQL database on VPS or use managed MySQL
+2. **Redis Setup**: Use Upstash Redis for both development and production
 3. **Environment Variables**: Configure in Coolify for each service
 4. **SSL Certificates**: Let Coolify handle SSL via Let's Encrypt
 5. **Monitoring**: Use Coolify logs for debugging and monitoring

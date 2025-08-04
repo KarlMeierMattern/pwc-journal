@@ -1,8 +1,10 @@
+// Create database connection
+
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import * as schema from "../db/schema";
 
-// Create MySQL connection
+// Create MySQL connection pool
 const connection = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
   port: parseInt(process.env.DB_PORT || "3306"),
@@ -15,7 +17,7 @@ const connection = mysql.createPool({
 });
 
 // Create Drizzle instance
-export const db = drizzle(connection, { schema });
+export const db = drizzle(connection, { schema, mode: "default" });
 
 // Test database connection
 export const testConnection = async () => {
@@ -28,5 +30,3 @@ export const testConnection = async () => {
     throw error;
   }
 };
-
-export default db;

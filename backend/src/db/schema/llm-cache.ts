@@ -1,7 +1,7 @@
 import {
   mysqlTable,
   serial,
-  int,
+  bigint,
   text,
   date,
   timestamp,
@@ -10,7 +10,7 @@ import { users } from "./users";
 
 export const llmCache = mysqlTable("llm_cache", {
   id: serial().primaryKey(),
-  userId: int()
+  userId: bigint({ mode: "number", unsigned: true })
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   fromDate: date().notNull(),

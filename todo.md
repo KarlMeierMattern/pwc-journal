@@ -9,21 +9,21 @@
 - [✅] Create `backend/src/db/schema/journal-entries.ts` - JournalEntry model
 - [✅] Create `backend/src/db/schema/llm-cache.ts` - LLMCache model
 - [✅] Create `backend/src/db/schema/index.ts` - Export all schemas
-- [❌] Create backend environment variables in `.env`
-- [❌] Create frontend environment variables in `.env`
+- [✅] Create backend environment variables in `env`
+- [✅] Create frontend environment variables in `env`
 
 ### Step 1.2: Database Configuration
 
-- [❌] Create `backend/src/config/database.ts` - MySQL connection using Drizzle
-- [❌] Create `backend/src/config/redis.ts` - Redis connection setup
-- [❌] Create `drizzle.config.ts` - Drizzle Kit configuration
-- [❌] Set up MySQL database on VPS or locally
+- [✅] Create `backend/src/config/database.ts` - MySQL connection using Drizzle
+- [✅] Create `backend/src/config/redis.ts` - Redis connection setup
+- [✅] Create `drizzle.config.ts` - Drizzle Kit configuration
+- [✅] Set up MySQL database via Docker for development
 
 ### Step 1.3: Database Migration Setup
 
-- [❌] Run `npx drizzle-kit generate:mysql` - Generate initial migration
-- [❌] Run `npx drizzle-kit push:mysql` - Push to database
-- [❌] Test database connection and verify tables created
+- [✅] Run `npx drizzle-kit generate` - Generate initial migration
+- [✅] Run `npx drizzle-kit push` - Push to database
+- [✅] Test database connection and verify tables created
 
 ---
 
@@ -176,8 +176,8 @@
 
 ### Production Environment
 
-- [❌] Set up MySQL database on VPS
-- [❌] Set up Redis on VPS
+- [❌] Set up MySQL database on VPS (production only)
+- [❌] Set up Redis on VPS (or use Upstash for both dev/prod)
 - [❌] Configure environment variables in Coolify
 - [❌] Test backend deployment with database connections
 - [❌] Test frontend deployment with API integration
