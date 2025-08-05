@@ -1,19 +1,21 @@
 import { Request, Response, NextFunction } from "express";
-import httpStatus from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
 import { verifyToken } from "../utils/jwt";
+import "../types/express";
 import dotenv from "dotenv";
 dotenv.config();
 
+// Middleware to authenticate requests
 export const authMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies.token || req.headers.authorization?.split("")[1];
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
   if (!token) {
     return res
-      .status(httpStatus.UNAUTHORIZED)
+      .status(StatusCodes.UNAUTHORIZED)
       .json({ message: "Unauthorized" });
   }
 
@@ -23,7 +25,7 @@ export const authMiddleware = (
     next();
   } catch (error) {
     return res
-      .status(httpStatus.UNAUTHORIZED)
+      .status(StatusCodes.UNAUTHORIZED)
       .json({ message: "Invalid token" });
   }
 };

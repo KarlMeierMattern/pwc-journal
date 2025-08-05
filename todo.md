@@ -31,11 +31,11 @@
 
 ### Step 2.1: Backend Auth Infrastructure
 
-- [❌] Install auth dependencies: `bcryptjs jsonwebtoken cookie-parser`
-- [❌] Install dev types: `@types/bcryptjs @types/jsonwebtoken @types/cookie-parser`
-- [❌] Create `backend/src/middleware/auth.ts` - JWT middleware
-- [❌] Create `backend/src/utils/jwt.ts` - JWT utilities
-- [❌] Create `backend/src/utils/password.ts` - Password hashing utilities
+- [✅] Install auth dependencies: `bcryptjs jsonwebtoken cookie-parser`
+- [✅] Install dev types: `@types/bcryptjs @types/jsonwebtoken @types/cookie-parser`
+- [✅] Create `backend/src/middleware/auth.ts` - JWT middleware
+- [✅] Create `backend/src/utils/jwt.ts` - JWT utilities
+- [✅] Create `backend/src/utils/password.ts` - Password hashing utilities
 - [❌] Create `backend/src/routes/auth.ts` - Auth routes
 - [❌] Create `backend/src/controllers/auth-controller.ts` - Auth business logic
 - [❌] Implement `POST /api/v1/auth/signup` route
