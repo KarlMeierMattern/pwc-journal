@@ -36,12 +36,12 @@
 - [✅] Create `backend/src/middleware/auth.ts` - JWT middleware
 - [✅] Create `backend/src/utils/jwt.ts` - JWT utilities
 - [✅] Create `backend/src/utils/password.ts` - Password hashing utilities
-- [❌] Create `backend/src/routes/auth.ts` - Auth routes
-- [❌] Create `backend/src/controllers/auth-controller.ts` - Auth business logic
-- [❌] Implement `POST /api/v1/auth/signup` route
-- [❌] Implement `POST /api/v1/auth/login` route
-- [❌] Implement `POST /api/v1/auth/logout` route
-- [❌] Implement `GET /api/v1/auth/me` route
+- [✅] Create `backend/src/routes/auth.ts` - Auth routes
+- [✅] Create `backend/src/controllers/auth-controller.ts` - Auth business logic
+- [✅] Implement `POST /api/v1/auth/signup` route
+- [✅] Implement `POST /api/v1/auth/login` route
+- [✅] Implement `POST /api/v1/auth/logout` route
+- [✅] Implement `GET /api/v1/auth/me` route
 - [❌] Test all auth endpoints with Postman
 
 ### Step 2.2: Frontend Auth Setup

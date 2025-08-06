@@ -1,18 +1,24 @@
 import express from "express";
-import { signup, login, logout, getMe } from "../controllers/auth-controller";
+import {
+  signup,
+  login,
+  logout,
+  getMe,
+} from "../controllers/auth-controller.js";
+import { authMiddleware } from "../middleware/auth-middleware.js";
 
 const router = express.Router();
 
 // create user
-router.post("/auth/signup", signup);
+router.post("/signup", signup);
 
 // login user
-router.post("/auth/login", login);
+router.post("/login", login);
 
 // logout user
-router.post("/auth/logout", logout);
+router.post("/logout", logout);
 
 // get current user
-router.get("/auth/me", getMe);
+router.get("/me", authMiddleware, getMe);
 
 export default router;

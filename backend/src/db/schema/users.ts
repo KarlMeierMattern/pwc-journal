@@ -1,7 +1,7 @@
 import { mysqlTable, serial, varchar, timestamp } from "drizzle-orm/mysql-core";
 
 export const users = mysqlTable("users", {
-  id: serial().primaryKey(),
+  id: serial().primaryKey(), // auto incrementing id
   email: varchar({ length: 255 }).notNull().unique(),
   passwordHash: varchar({ length: 255 }).notNull(),
   createdAt: timestamp().defaultNow().notNull(),

@@ -1,10 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 // security packages
 import cors from "cors";
 import router from "./routes/index.js";
+import authRouter from "./routes/auth.js";
 // import helmet from "helmet";
 // import xss from "xss-clean";
 // import hpp from "hpp";
@@ -19,7 +21,6 @@ const port = process.env.PORT || 3000;
 // authentication
 
 // middleware
-
 const allowedOrigins =
   process.env.NODE_ENV === "development"
     ? [process.env.FRONTEND_DEV_URL, "http://localhost:5173"]
@@ -45,12 +46,17 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+app.use(express.json()); // req.body parser
+app.use(express.urlencoded({ extended: true })); // converts form data to req.body
+
 // error handling
 
 // reverse proxy (trust proxy)
 
 // routes
 app.use("/api/v1", router);
+app.use("/api/v1/auth", authRouter);
 
 // start server
 app.listen(port, () => {
