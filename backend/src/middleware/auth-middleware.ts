@@ -18,7 +18,7 @@ export const authMiddleware = (
 
   try {
     const decoded = verifyToken(token, process.env.JWT_SECRET || "");
-    req.user = decoded;
+    req.user = decoded; // decoded = { userId: 15, email: "test@example.com" }
     next();
   } catch (error) {
     return res

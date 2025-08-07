@@ -42,7 +42,10 @@
 - [✅] Implement `POST /api/v1/auth/login` route
 - [✅] Implement `POST /api/v1/auth/logout` route
 - [✅] Implement `GET /api/v1/auth/me` route
-- [❌] Test all auth endpoints with Postman
+- [✅] Test `/api/v1/auth/signup` with Postman
+- [✅] Test `/api/v1/auth/login` with Postman
+- [✅] Test `/api/v1/auth/logout` with Postman
+- [✅] Test `/api/v1/auth/me` with Postman
 
 ### Step 2.2: Frontend Auth Setup
 

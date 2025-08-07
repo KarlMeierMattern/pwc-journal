@@ -3,10 +3,27 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 dotenv.config();
 
+console.log("�� Main app env check:");
+console.log("DB_HOST:", process.env.DB_HOST ? "✅ Set" : "❌ Missing");
+console.log("DB_USER:", process.env.DB_USER ? "✅ Set" : "❌ Missing");
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD ? "✅ Set" : "❌ Missing");
+console.log("DB_NAME:", process.env.DB_NAME ? "✅ Set" : "❌ Missing");
+
+// Test database connection on startup
+import { testConnection } from "./config/database.js";
+
+// Add this after your environment check:
+console.log("🔍 Testing database connection on startup...");
+testConnection()
+  .then(() => console.log("✅ Database connection successful on startup"))
+  .catch((error) =>
+    console.log("❌ Database connection failed on startup:", error.message)
+  );
+
 // security packages
 import cors from "cors";
 import router from "./routes/index.js";
-import authRouter from "./routes/auth.js";
+import authRouter from "./routes/auth-router.js";
 // import helmet from "helmet";
 // import xss from "xss-clean";
 // import hpp from "hpp";
