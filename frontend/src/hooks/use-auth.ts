@@ -14,6 +14,7 @@ const API_BASE_URL =
       "http://lkogk8wo88koc4404g0wws48.167.235.142.148.sslip.io";
 
 // get current authenticated user
+// handles caching and refetching of user data automatically
 export const useCurrentUser = () => {
   return useQuery<User, Error>({
     queryKey: ["auth", "current-user"],
@@ -41,6 +42,19 @@ export const useCurrentUser = () => {
   });
 };
 
+// Convenience hook for auth state
+export const useAuth = () => {
+  const { data, isLoading, error } = useCurrentUser();
+
+  return {
+    user: data || null,
+    isAuthenticated: !!data, // converts value to boolean - true if user logged in
+    isLoading,
+    error,
+  };
+};
+
+// Invoke QueryClient in order to manually update cache after successful signup
 export const useSignup = () => {
   const queryClient = useQueryClient();
 
@@ -78,6 +92,7 @@ export const useSignup = () => {
   });
 };
 
+// Invoke QueryClient in order to manually update cache after successful login
 export const useLogin = () => {
   const queryClient = useQueryClient();
 
@@ -115,6 +130,7 @@ export const useLogin = () => {
   });
 };
 
+// Invoke QueryClient in order to manually update cache after successful logout
 export const useLogout = () => {
   const queryClient = useQueryClient();
 
@@ -145,16 +161,4 @@ export const useLogout = () => {
       queryClient.clear();
     },
   });
-};
-
-// Convenience hook for auth state
-export const useAuth = () => {
-  const { data, isLoading, error } = useCurrentUser();
-
-  return {
-    user: data || null,
-    isAuthenticated: !!data, // converts value to boolean - true if user logged in
-    isLoading,
-    error,
-  };
 };

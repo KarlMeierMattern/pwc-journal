@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../context/auth-context";
+import { useCurrentUser } from "../hooks/use-auth";
 
 type Data = {
   userId: number;
@@ -10,6 +11,11 @@ type Data = {
 
 const Home = () => {
   const { user, isAuthenticated, isLoading: authLoading } = useAuthContext();
+  const {
+    data: currentUserData,
+    isLoading: currentUserLoading,
+    error: currentUserError,
+  } = useCurrentUser();
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +49,7 @@ const Home = () => {
       <h1 className="text-xl ">{data?.title}</h1>
 
       <div className="mt-8 p-4 border rounded">
-        <h2 className="text-2xl font-bold mb-2">Auth Status:</h2>
+        <h2 className="text-2xl font-bold mb-2">Auth Status (via Context):</h2>
         {authLoading ? (
           <p>Loading auth...</p>
         ) : isAuthenticated ? (
@@ -51,6 +57,21 @@ const Home = () => {
         ) : (
           <p className="text-red-600">❌ Not authenticated</p>
         )}
+      </div>
+
+      <div className="mt-4 p-4 border rounded bg-gray-50">
+        <h2 className="text-2xl font-bold mb-2">useCurrentUser Direct Test:</h2>
+        <p>
+          <strong>Loading:</strong> {currentUserLoading ? "Yes" : "No"}
+        </p>
+        <p>
+          <strong>Data:</strong>{" "}
+          {currentUserData ? JSON.stringify(currentUserData) : "null"}
+        </p>
+        <p>
+          <strong>Error:</strong>{" "}
+          {currentUserError ? currentUserError.message : "None"}
+        </p>
       </div>
     </div>
   );
