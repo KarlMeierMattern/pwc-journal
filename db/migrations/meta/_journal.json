@@ -15,6 +15,20 @@
       "when": 1754283657399,
       "tag": "0001_light_pride",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1754728287782,
+      "tag": "0002_loud_starbolt",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1754728328382,
+      "tag": "0003_known_skullbuster",
+      "breakpoints": true
     }
   ]
 }
