@@ -49,8 +49,8 @@
 
 ### Step 2.2: Frontend Auth Setup
 
-- [❌] Install React Query: `@tanstack/react-query @tanstack/react-query-devtools`
-- [❌] Install form dependencies: `react-hook-form @hookform/resolvers zod`
+- [✅] Install React Query: `@tanstack/react-query @tanstack/react-query-devtools`
+- [✅] Install form dependencies: `react-hook-form @hookform/resolvers zod`
 - [❌] Create `frontend/src/hooks/use-auth.ts` - Auth hooks
 - [❌] Create `frontend/src/context/auth-context.tsx` - Auth provider
 - [❌] Create `frontend/src/utils/api.ts` - API client with React Query
