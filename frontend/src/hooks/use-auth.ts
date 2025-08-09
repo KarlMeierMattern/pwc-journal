@@ -1,9 +1,4 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  type UseQueryResult,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   AuthResponse,
   LoginRequest,
@@ -19,8 +14,8 @@ const API_BASE_URL =
       "http://lkogk8wo88koc4404g0wws48.167.235.142.148.sslip.io";
 
 // get current authenticated user
-export const useCurrentUser = (): UseQueryResult<{ user: User }, Error> => {
-  return useQuery<{ user: User }, Error>({
+export const useCurrentUser = () => {
+  return useQuery<User, Error>({
     queryKey: ["auth", "current-user"],
     queryFn: async () => {
       try {
@@ -33,8 +28,8 @@ export const useCurrentUser = (): UseQueryResult<{ user: User }, Error> => {
         if (!response.ok) {
           throw new Error("Failed to fetch current user");
         }
-        const data = await response.json();
-        return data;
+        const data: { user: User } = await response.json();
+        return data.user;
       } catch (error) {
         console.error("Error fetching current user:", error);
         throw error;
@@ -46,50 +41,11 @@ export const useCurrentUser = (): UseQueryResult<{ user: User }, Error> => {
   });
 };
 
-export const useLogin = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation<AuthResponse, Error, LoginRequest>({
-    mutationFn: async (data) => {
-      const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        let error;
-        try {
-          error = await response.json();
-        } catch {
-          error = {
-            message: `HTTP ${response.status}: ${response.statusText}`,
-          };
-        }
-        throw error;
-      }
-      return response.json();
-    },
-    onSuccess: (response) => {
-      queryClient.setQueryData(["auth", "current-user"], {
-        user: response.user,
-      });
-      queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
-    },
-    onError: () => {
-      // remove current user from cache if login fails
-      queryClient.removeQueries({ queryKey: ["auth", "current-user"] });
-    },
-  });
-};
-
 export const useSignup = () => {
   const queryClient = useQueryClient();
 
   return useMutation<AuthResponse, Error, SignupRequest>({
-    mutationFn: async (data) => {
+    mutationFn: async (data: SignupRequest): Promise<AuthResponse> => {
       const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
         method: "POST",
         credentials: "include",
@@ -111,11 +67,50 @@ export const useSignup = () => {
       }
       return response.json();
     },
-    onSuccess: (response) => {
-      queryClient.setQueryData(["auth", "current-user"], {
-        user: response.user,
+    onSuccess: (response: AuthResponse) => {
+      // set current user in cache
+      queryClient.setQueryData(["auth", "current-user"], response.user);
+    },
+    onError: () => {
+      // remove current user from cache if signup fails
+      queryClient.removeQueries({ queryKey: ["auth", "current-user"] });
+    },
+  });
+};
+
+export const useLogin = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<AuthResponse, Error, LoginRequest>({
+    mutationFn: async (data: LoginRequest): Promise<AuthResponse> => {
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
-      queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
+      if (!response.ok) {
+        let error;
+        try {
+          error = await response.json();
+        } catch {
+          error = {
+            message: `HTTP ${response.status}: ${response.statusText}`,
+          };
+        }
+        throw error;
+      }
+      return response.json();
+    },
+    onSuccess: (response: AuthResponse) => {
+      // set current user in cache
+      queryClient.setQueryData(["auth", "current-user"], response.user);
+    },
+    onError: () => {
+      // remove current user from cache if login fails
+      queryClient.removeQueries({ queryKey: ["auth", "current-user"] });
     },
   });
 };
@@ -123,7 +118,7 @@ export const useSignup = () => {
 export const useLogout = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, void>({
+  return useMutation<{ message: string }, Error, void>({
     mutationFn: async () => {
       const response = await fetch(`${API_BASE_URL}/api/v1/auth/logout`, {
         method: "POST",
@@ -143,6 +138,7 @@ export const useLogout = () => {
         }
         throw error;
       }
+      return response.json();
     },
     onSuccess: () => {
       // Clear all cached data on logout
@@ -156,8 +152,8 @@ export const useAuth = () => {
   const { data, isLoading, error } = useCurrentUser();
 
   return {
-    user: data?.user || null,
-    isAuthenticated: !!data?.user,
+    user: data || null,
+    isAuthenticated: !!data, // converts value to boolean - true if user logged in
     isLoading,
     error,
   };

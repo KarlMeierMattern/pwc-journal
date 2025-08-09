@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../context/auth-context";
 
 type Data = {
   userId: number;
@@ -8,6 +9,7 @@ type Data = {
 };
 
 const Home = () => {
+  const { user, isAuthenticated, isLoading: authLoading } = useAuthContext();
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +41,17 @@ const Home = () => {
     <div>
       <h1 className="text-3xl font-bold underline">Test fetched data:</h1>
       <h1 className="text-xl ">{data?.title}</h1>
+
+      <div className="mt-8 p-4 border rounded">
+        <h2 className="text-2xl font-bold mb-2">Auth Status:</h2>
+        {authLoading ? (
+          <p>Loading auth...</p>
+        ) : isAuthenticated ? (
+          <p className="text-green-600">✅ Authenticated as: {user?.email}</p>
+        ) : (
+          <p className="text-red-600">❌ Not authenticated</p>
+        )}
+      </div>
     </div>
   );
 };

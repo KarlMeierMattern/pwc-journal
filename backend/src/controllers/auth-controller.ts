@@ -4,12 +4,15 @@ import { StatusCodes } from "http-status-codes";
 import { hashPassword, comparePassword } from "../utils/password.js";
 import { generateToken } from "../utils/jwt.js";
 import { db } from "../config/database.js";
-import { users } from "../db/schema/users.js";
+import { users, type User } from "../db/schema/users.js";
 import { eq } from "drizzle-orm";
 
 export const signup = async (
   req: Request,
-  res: Response,
+  res: Response<
+    | { user: { id: number; email: string }; message: string }
+    | { message: string }
+  >,
   next: NextFunction
 ) => {
   try {
@@ -71,7 +74,10 @@ export const signup = async (
 
 export const login = async (
   req: Request,
-  res: Response,
+  res: Response<
+    | { user: { id: number; email: string }; message: string }
+    | { message: string }
+  >,
   next: NextFunction
 ) => {
   try {
@@ -137,7 +143,7 @@ export const login = async (
 
 export const logout = async (
   req: Request,
-  res: Response,
+  res: Response<{ message: string }>,
   next: NextFunction
 ) => {
   try {
@@ -150,7 +156,7 @@ export const logout = async (
 
 export const getMe = async (
   req: Request,
-  res: Response,
+  res: Response<{ user: { id: number; email: string } } | { message: string }>,
   next: NextFunction
 ) => {
   try {
@@ -164,7 +170,12 @@ export const getMe = async (
         .status(StatusCodes.NOT_FOUND)
         .json({ message: "User not found" });
     }
-    res.status(StatusCodes.OK).json({ user });
+    res.status(StatusCodes.OK).json({
+      user: {
+        id: user.id,
+        email: user.email,
+      },
+    });
   } catch (error) {
     next(error);
   }

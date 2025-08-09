@@ -1,10 +1,6 @@
 export type User = {
   id: number;
   email: string;
-  firstName: string;
-  lastName: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type LoginRequest = {
@@ -15,13 +11,14 @@ export type LoginRequest = {
 export type SignupRequest = {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
 };
 
 export type AuthResponse = {
-  user: User;
-  token: string;
+  user: {
+    id: number;
+    email: string;
+  };
+  message: string;
 };
 
 export type AuthError = {
