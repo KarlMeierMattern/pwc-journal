@@ -3,14 +3,21 @@ import { useLogout } from "../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
-  const { user } = useAuthContext();
+  const { user, authLoading } = useAuthContext();
   const logout = useLogout();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout.mutate();
-    navigate("/login");
+    logout.mutate(undefined, {
+      onSuccess: () => {
+        navigate("/login", { replace: true });
+      },
+    });
   };
+
+  if (authLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-8">

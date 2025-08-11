@@ -4,6 +4,7 @@ import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
 import { ProtectedRoute } from "./components/auth/protected-route";
+import { Navigate } from "react-router-dom";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

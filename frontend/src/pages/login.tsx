@@ -39,7 +39,7 @@ export const Login = () => {
       {
         onSuccess: () => {
           reset();
-          navigate("/dashboard");
+          navigate("/dashboard", { replace: true });
         },
         onError: (error: Error) => {
           setError("root", {
