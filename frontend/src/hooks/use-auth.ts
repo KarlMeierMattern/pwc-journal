@@ -4,7 +4,7 @@ import type {
   LoginRequest,
   SignupRequest,
   User,
-} from "../types/auth";
+} from "../types/auth.types";
 
 // get API base URL from environment variables
 const API_BASE_URL =
@@ -49,7 +49,7 @@ export const useAuth = () => {
   return {
     user: data || null,
     isAuthenticated: !!data, // converts value to boolean - true if user logged in
-    isLoading,
+    authLoading: isLoading,
     error,
   };
 };

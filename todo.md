@@ -58,16 +58,15 @@
 
 ### Step 2.3: Auth UI Components
 
-- [✅] Install shadcn components: `button input form label card`
-- [❌] Create `frontend/src/components/auth/login-form.tsx` - LoginForm
-- [❌] Create `frontend/src/components/auth/signup-form.tsx` - SignupForm
-- [❌] Create `frontend/src/pages/login.tsx` - Login page
-- [❌] Create `frontend/src/pages/signup.tsx` - Signup page
+- [✅] Create button component: `button input form label card`
+- [❌] Create form component: `form input label card`
+- [✅] Create `frontend/src/pages/login.tsx` - Login page
+- [✅] Create `frontend/src/pages/signup.tsx` - Signup page
 - [❌] Test login/signup flow end-to-end
 
 ### Step 2.4: Protected Route Setup
 
-- [❌] Create `frontend/src/components/auth/protected-route.tsx` - ProtectedRoute
+- [✅] Create `frontend/src/components/auth/protected-route.tsx` - ProtectedRoute
 - [❌] Create `frontend/src/components/auth/auth-guard.tsx` - AuthGuard
 - [❌] Test protected routes redirect to login when unauthenticated
 

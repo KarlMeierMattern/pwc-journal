@@ -12,11 +12,14 @@
 
 import { useForm } from "react-hook-form";
 import { useSignup } from "../hooks/use-auth";
-import { signUpSchema, type SignUpSchema } from "../types/signup";
+import { signUpSchema, type SignUpSchema } from "../types/signup.types.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../components/button";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Signup = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -36,7 +39,7 @@ export const Signup = () => {
       {
         onSuccess: () => {
           reset();
-          // Optionally redirect or show success message
+          navigate("/dashboard");
         },
         onError: (error: Error) => {
           setError("root", {
@@ -101,6 +104,12 @@ export const Signup = () => {
         >
           {signupMutation.isPending ? "Signing up..." : "Signup"}
         </Button>
+        <p className="text-center text-gray-500">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500">
+            Login
+          </Link>
+        </p>
       </form>
     </div>
   );

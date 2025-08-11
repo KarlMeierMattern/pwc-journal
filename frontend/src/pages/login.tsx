@@ -12,11 +12,14 @@
 
 import { useForm } from "react-hook-form";
 import { useLogin } from "../hooks/use-auth";
-import { loginSchema, type LoginSchema } from "../types/login";
+import { loginSchema, type LoginSchema } from "../types/login.types.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../components/button";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -36,7 +39,7 @@ export const Login = () => {
       {
         onSuccess: () => {
           reset();
-          // Optionally redirect or show success message
+          navigate("/dashboard");
         },
         onError: (error: Error) => {
           setError("root", {
@@ -88,6 +91,12 @@ export const Login = () => {
         >
           {loginMutation.isPending ? "Logging in..." : "Login"}
         </Button>
+        <p className="text-center text-gray-500">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-500">
+            Signup
+          </Link>
+        </p>
       </form>
     </div>
   );
