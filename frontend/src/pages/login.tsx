@@ -11,24 +11,24 @@
 // ❌ Password strength indicator
 
 import { useForm } from "react-hook-form";
-import { useSignup } from "../hooks/use-auth";
-import { signUpSchema, type SignUpSchema } from "../types/signup";
+import { useLogin } from "../hooks/use-auth";
+import { loginSchema, type LoginSchema } from "../types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../components/button";
 
-export const Signup = () => {
+export const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setError,
-  } = useForm<SignUpSchema>({ resolver: zodResolver(signUpSchema) });
+  } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
 
-  const signupMutation = useSignup();
+  const loginMutation = useLogin();
 
-  const onSubmit = (data: SignUpSchema) => {
-    signupMutation.mutate(
+  const onSubmit = (data: LoginSchema) => {
+    loginMutation.mutate(
       {
         email: data.email,
         password: data.password,
@@ -40,7 +40,7 @@ export const Signup = () => {
         },
         onError: (error: Error) => {
           setError("root", {
-            message: error.message || "Signup failed",
+            message: error.message || "Login failed",
           });
         },
       }
@@ -54,7 +54,7 @@ export const Signup = () => {
         className="flex flex-col gap-y-6 bg-white bg-opacity-10 p-8 rounded-xl shadow-md w-full max-w-md"
       >
         <input
-          disabled={signupMutation.isPending}
+          disabled={loginMutation.isPending}
           placeholder="Email"
           {...register("email")}
           className="text-gray-700 px-6 py-4 rounded-lg bg-white bg-opacity-80 text-lg placeholder-gray-400 focus:outline-none border-1 border-gray-300"
@@ -65,7 +65,7 @@ export const Signup = () => {
           </p>
         )}
         <input
-          disabled={signupMutation.isPending}
+          disabled={loginMutation.isPending}
           placeholder="Password"
           {...register("password")}
           type="password"
@@ -76,19 +76,6 @@ export const Signup = () => {
             {errors.password.message as string}
           </p>
         )}
-        <input
-          disabled={signupMutation.isPending}
-          placeholder="Confirm Password"
-          type="password"
-          {...register("confirmPassword")}
-          className="text-gray-700 px-6 py-4 rounded-lg bg-white bg-opacity-80 text-lg placeholder-gray-400 focus:outline-none border-1 border-gray-300"
-        />
-        {errors.confirmPassword && (
-          <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
-            {errors.confirmPassword.message as string}
-          </p>
-        )}
-
         {errors.root && (
           <p className="text-red-500 bg-red-100 rounded-md px-4 py-2 mt-2">
             {errors.root.message}
@@ -96,10 +83,10 @@ export const Signup = () => {
         )}
 
         <Button
-          disabled={signupMutation.isPending}
-          isPending={signupMutation.isPending}
+          disabled={loginMutation.isPending}
+          isPending={loginMutation.isPending}
         >
-          {signupMutation.isPending ? "Signing up..." : "Signup"}
+          {loginMutation.isPending ? "Logging in..." : "Login"}
         </Button>
       </form>
     </div>

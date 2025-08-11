@@ -58,7 +58,7 @@
 
 ### Step 2.3: Auth UI Components
 
-- [❌] Install shadcn components: `button input form label card`
+- [✅] Install shadcn components: `button input form label card`
 - [❌] Create `frontend/src/components/auth/login-form.tsx` - LoginForm
 - [❌] Create `frontend/src/components/auth/signup-form.tsx` - SignupForm
 - [❌] Create `frontend/src/pages/login.tsx` - Login page
