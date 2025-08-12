@@ -67,8 +67,8 @@
 ### Step 2.4: Protected Route Setup
 
 - [✅] Create `frontend/src/components/auth/protected-route.tsx` - ProtectedRoute
-- [❌] Create `frontend/src/components/auth/auth-guard.tsx` - AuthGuard
-- [❌] Test protected routes redirect to login when unauthenticated
+- [✅] Create `frontend/src/components/auth/auth-guard.tsx` - AuthGuard
+- [✅] Test protected routes redirect to login when unauthenticated
 
 ---
 
