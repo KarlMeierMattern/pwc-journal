@@ -7,10 +7,10 @@ import {
   type NewJournalEntry,
   type JournalEntry,
 } from "../db/schema/journal-entries.js";
-import { eq } from "drizzle-orm";
+import { and, desc, eq, gte, lte } from "drizzle-orm";
 
 export const addJournalEntry = async (
-  req: Request,
+  req: Request<{}, {}, { content: string }>,
   res: Response<{ message: string }>,
   next: NextFunction
 ) => {
@@ -24,7 +24,7 @@ export const addJournalEntry = async (
     }
 
     const newEntry: NewJournalEntry = {
-      userId: req.user.id,
+      userId: req.user.userId,
       content,
     };
 
@@ -37,17 +37,74 @@ export const addJournalEntry = async (
   }
 };
 
+// // Get last 10 entries
+// GET /api/v1/journal?limit=10
+
+// Get entries from last week
+// GET /api/v1/journal?from=2024-01-01&to=2024-01-07
+
+// Get page 2 with 20 entries
+// GET /api/v1/journal?page=2&limit=20
 export const getJournalEntries = async (
   req: Request,
-  res: Response,
+  res: Response<JournalEntry[] | { message: string }>,
   next: NextFunction
-) => {};
+) => {
+  try {
+    const { userId } = req.user;
+    const { from, to, limit = "10", page = "1" } = req.query;
 
-export const getJournalEntryById = (
-  req: Request,
-  res: Response,
+    const conditions = [eq(journalEntries.userId, userId)];
+    if (from)
+      conditions.push(gte(journalEntries.createdAt, new Date(from as string)));
+    if (to)
+      conditions.push(lte(journalEntries.createdAt, new Date(to as string)));
+
+    const entries = await db
+      .select()
+      .from(journalEntries)
+      .where(and(...conditions))
+      .orderBy(desc(journalEntries.createdAt))
+      .limit(parseInt(limit as string))
+      .offset((parseInt(page as string) - 1) * parseInt(limit as string));
+
+    return res.status(StatusCodes.OK).json(entries);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getJournalEntryById = async (
+  req: Request<{ id: string }, {}, {}, {}>,
+  res: Response<JournalEntry | { message: string }>,
   next: NextFunction
-) => {};
+) => {
+  try {
+    const { userId } = req.user;
+    const { id } = req.params;
+
+    const [entry] = await db
+      .select()
+      .from(journalEntries)
+      .where(
+        and(
+          eq(journalEntries.userId, userId),
+          eq(journalEntries.id, parseInt(id))
+        )
+      )
+      .limit(1);
+
+    if (!entry) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Entry not found" });
+    }
+
+    return res.status(StatusCodes.OK).json(entry);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const updateJournalEntry = async (
   req: Request,

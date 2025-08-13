@@ -7,12 +7,14 @@ import {
   deleteJournalEntry,
 } from "../controllers/journal-controller";
 
+import { authMiddleware } from "../middleware/auth-middleware.js";
+
 const router = Router();
 
-router.post("/", addJournalEntry);
-router.get("/", getJournalEntries);
-router.get("/:id", getJournalEntryById);
-router.put("/:id", updateJournalEntry);
-router.delete("/:id", deleteJournalEntry);
+router.post("/", authMiddleware, addJournalEntry);
+router.get("/", authMiddleware, getJournalEntries);
+router.get("/:id", authMiddleware, getJournalEntryById);
+router.put("/:id", authMiddleware, updateJournalEntry);
+router.delete("/:id", authMiddleware, deleteJournalEntry);
 
 export default router;
