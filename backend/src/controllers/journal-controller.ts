@@ -15,6 +15,7 @@ export const addJournalEntry = async (
   next: NextFunction
 ) => {
   try {
+    const { userId } = req.user;
     const { content } = req.body;
 
     if (!content) {
@@ -24,7 +25,7 @@ export const addJournalEntry = async (
     }
 
     const newEntry: NewJournalEntry = {
-      userId: req.user.userId,
+      userId,
       content,
     };
 

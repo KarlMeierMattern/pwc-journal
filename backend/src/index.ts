@@ -24,6 +24,7 @@ testConnection()
 import cors from "cors";
 import router from "./routes/index.js";
 import authRouter from "./routes/auth-router.js";
+import journalRouter from "./routes/journal-router.js";
 // import helmet from "helmet";
 // import xss from "xss-clean";
 // import hpp from "hpp";
@@ -74,7 +75,7 @@ app.use(express.urlencoded({ extended: true })); // converts form data to req.bo
 // routes
 app.use("/api/v1", router);
 app.use("/api/v1/auth", authRouter);
-
+app.use("/api/v1/journal", journalRouter);
 // start server
 app.listen(port, () => {
   console.log(`App listening on http://localhost:${port}`);

@@ -14,7 +14,7 @@ const router = Router();
 router.post("/", authMiddleware, addJournalEntry);
 router.get("/", authMiddleware, getJournalEntries);
 router.get("/:id", authMiddleware, getJournalEntryById);
-router.put("/:id", authMiddleware, updateJournalEntry);
+router.patch("/:id", authMiddleware, updateJournalEntry);
 router.delete("/:id", authMiddleware, deleteJournalEntry);
 
 export default router;

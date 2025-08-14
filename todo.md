@@ -81,11 +81,11 @@
 - [❌] Create `backend/src/utils/validation.ts` - Validation schemas
 - [✅] Implement `POST /api/v1/journal` - Create entry
 - [✅] Implement `GET /api/v1/journal` - List entries with basic filters (date, limit, page)
-- [❌] Implement `GET /api/v1/journal/:id` - Get single entry
-- [❌] Implement `PUT /api/v1/journal/:id` - Update entry
-- [❌] Implement `DELETE /api/v1/journal/:id` - Delete entry
+- [✅] Implement `GET /api/v1/journal/:id` - Get single entry
+- [✅] Implement `PUT /api/v1/journal/:id` - Update entry
+- [✅] Implement `DELETE /api/v1/journal/:id` - Delete entry
 - [❌] Implement `GET /api/v1/journal` - List entries with advanced filters (text search, date range)
-- [❌] Test all journal endpoints with Postman
+- [✅] Test all journal endpoints with Postman
 
 ### Step 3.2: Frontend Journal Data Layer
 
