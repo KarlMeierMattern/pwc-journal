@@ -92,8 +92,9 @@
 - [❌] Create `frontend/src/hooks/use-journal.ts` - React Query journal hooks
 - [❌] Create `frontend/src/utils/journal-api.ts` - Journal API calls
 - [❌] Create `frontend/src/types/journal.ts` - Journal interfaces
-- [❌] Implement `useJournalEntries()` hook
 - [❌] Implement `useCreateEntry()` mutation
+- [❌] Implement `useJournalEntries()` hook
+- [❌] Implement `useJournalEntry()` hook
 - [❌] Implement `useUpdateEntry()` mutation
 - [❌] Implement `useDeleteEntry()` mutation
 
