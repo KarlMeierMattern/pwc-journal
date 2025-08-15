@@ -1,6 +1,7 @@
 import { useAuthContext } from "../context/auth-context";
 import { useLogout } from "../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
+import { JournalEntryCard } from "@/components/journal/journal-entry-card";
 
 export const Dashboard = () => {
   const { user, authLoading } = useAuthContext();
@@ -25,6 +26,8 @@ export const Dashboard = () => {
         <h1 className="text-4xl font-bold text-gray-800 mb-8">
           Welcome back, {user?.email}!
         </h1>
+
+        <JournalEntryCard />
 
         <div className="bg-white rounded-xl shadow-md p-6">
           <h2 className="text-2xl font-semibold mb-4">

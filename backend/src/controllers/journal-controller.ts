@@ -10,7 +10,7 @@ import {
 import { and, desc, eq, gte, lte } from "drizzle-orm";
 
 export const addJournalEntry = async (
-  req: Request<{}, {}, { content: string }>,
+  req: Request<{}, {}, { content: string }, {}>,
   res: Response<{ message: string }>,
   next: NextFunction
 ) => {
@@ -38,14 +38,6 @@ export const addJournalEntry = async (
   }
 };
 
-// // Get last 10 entries
-// GET /api/v1/journal?limit=10
-
-// Get entries from last week
-// GET /api/v1/journal?from=2024-01-01&to=2024-01-07
-
-// Get page 2 with 20 entries
-// GET /api/v1/journal?page=2&limit=20
 export const getJournalEntries = async (
   req: Request<
     {},
