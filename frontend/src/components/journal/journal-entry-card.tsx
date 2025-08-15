@@ -1,6 +1,5 @@
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import type { JournalEntry } from "@/types/journal.types";
+import { Button } from "@/components/ui/button";
 
 export const JournalEntryCard = ({
   entry,
@@ -12,11 +11,17 @@ export const JournalEntryCard = ({
   onDelete: (id: number) => void;
 }) => {
   return (
-    <div className="flex flex-col gap-y-4">
-      <Textarea />
-      <div className="flex justify-end">
+    <div className="flex flex-col gap-y-4 p-4 border rounded-lg ">
+      <div className="whitespace-pre-wrap">{entry.content}</div>
+      <div className="text-sm text-gray-500">
+        {new Date(entry.createdAt).toLocaleDateString()}
+      </div>
+
+      <div className="flex justify-end gap-2">
         <Button onClick={() => onEdit(entry.id)}>Edit</Button>
-        <Button onClick={() => onDelete(entry.id)}>Delete</Button>
+        <Button variant="destructive" onClick={() => onDelete(entry.id)}>
+          Delete
+        </Button>
       </div>
     </div>
   );
