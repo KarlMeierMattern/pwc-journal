@@ -3,9 +3,10 @@ import { Home } from "./pages/home";
 import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
-import { ProtectedRoute } from "./components/auth/protected-route";
-import { AuthGuard } from "./components/auth/auth-guard";
+import { ProtectedRoute } from "@/components/protected-route";
+import { AuthGuard } from "@/components/auth-guard";
 import { Navigate } from "react-router-dom";
+import { AllEntries } from "./pages/all-entries";
 
 const App = () => {
   return (
@@ -23,8 +24,8 @@ const App = () => {
           }
         />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/all-entries" element={<AllEntries />} />
       </Routes>
-      //{" "}
     </AuthGuard>
   );
 };

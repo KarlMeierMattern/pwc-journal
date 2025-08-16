@@ -35,6 +35,9 @@ export const JournalEntryForm = ({
 
   const onSubmit = async (data: JournalFormData) => {
     onSave(data.content);
+    if (!entry) {
+      reset();
+    }
   };
 
   const handleCancel = () => {
@@ -46,7 +49,7 @@ export const JournalEntryForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 ">
       <div>
         <Textarea
           id="content"
