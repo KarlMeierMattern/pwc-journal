@@ -28,21 +28,18 @@ export const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 p-8">
+    <div className="min-h-screen p-8 bg-stone-50 font-geist">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-8">
-            Journal Dashboard
+          <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-8">
+            Journal
           </h1>
-          <Button onClick={() => navigate("/all-entries")}>
-            View all entries
-          </Button>
+          <Button onClick={() => navigate("/all-entries")}>All entries</Button>
         </div>
-        <div className="bg-white rounded-xl shadow-md p-6 mb-6 ">
-          <h2 className="text-2xl font-semibold mb-4">Write New Entry</h2>
+        <div className="bg-white rounded-xl shadow-sm p-6 mb-6 ">
           <JournalEntryForm onSave={handleCreateEntry} />
         </div>
-        <div className="bg-white rounded-xl shadow-md p-6">
+        <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex justify-between items-center">
             <p className="text-gray-600">Logged in as {user?.email}</p>
             <button

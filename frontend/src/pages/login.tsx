@@ -14,9 +14,15 @@ import { useForm } from "react-hook-form";
 import { useLogin } from "../hooks/use-auth";
 import { loginSchema, type LoginSchema } from "../types/login.types.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../components/button";
+import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-// import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -52,53 +58,63 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-100 to-gray-200">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-6 bg-white bg-opacity-10 p-8 rounded-xl shadow-md w-full max-w-md"
-      >
-        <input
-          disabled={loginMutation.isPending}
-          placeholder="Email"
-          {...register("email")}
-          className="text-gray-700 px-6 py-4 rounded-lg bg-white bg-opacity-80 text-lg placeholder-gray-400 focus:outline-none border-1 border-gray-300"
-        />
-        {errors.email && (
-          <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
-            {errors.email.message as string}
-          </p>
-        )}
-        <input
-          disabled={loginMutation.isPending}
-          placeholder="Password"
-          {...register("password")}
-          type="password"
-          className="text-gray-700 px-6 py-4 rounded-lg bg-white bg-opacity-80 text-lg placeholder-gray-400 focus:outline-none border-1 border-gray-300"
-        />
-        {errors.password && (
-          <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
-            {errors.password.message as string}
-          </p>
-        )}
-        {errors.root && (
-          <p className="text-red-500 bg-red-100 rounded-md px-4 py-2 mt-2">
-            {errors.root.message}
-          </p>
-        )}
+    <div className="min-h-screen flex items-center justify-center bg-stone-50 font-geist">
+      <Card className="w-full max-w-sm">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            Enter your email and password to access your journal
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-y-6"
+          >
+            <input
+              disabled={loginMutation.isPending}
+              placeholder="Email"
+              {...register("email")}
+              className="text-gray-700 px-6 py-2 text-sm rounded-lg bg-white bg-opacity-80 placeholder-gray-400 focus:outline-none border-1 border-gray-300"
+            />
+            {errors.email && (
+              <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
+                {errors.email.message as string}
+              </p>
+            )}
+            <input
+              disabled={loginMutation.isPending}
+              placeholder="Password"
+              {...register("password")}
+              type="password"
+              className="text-gray-700 px-6 py-2 text-sm rounded-lg bg-white bg-opacity-80 placeholder-gray-400 focus:outline-none border-1 border-gray-300"
+            />
+            {errors.password && (
+              <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
+                {errors.password.message as string}
+              </p>
+            )}
+            {errors.root && (
+              <p className="text-red-500 bg-red-100 rounded-md px-4 py-2 mt-2">
+                {errors.root.message}
+              </p>
+            )}
 
-        <Button
-          disabled={loginMutation.isPending}
-          isPending={loginMutation.isPending}
-        >
-          {loginMutation.isPending ? "Logging in..." : "Login"}
-        </Button>
-        <p className="text-center text-gray-500">
-          Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-500">
-            Signup
-          </Link>
-        </p>
-      </form>
+            <Button
+              disabled={loginMutation.isPending}
+              // isPending={loginMutation.isPending}
+            >
+              {loginMutation.isPending ? "Logging in..." : "Login"}
+            </Button>
+            <p className="text-center text-gray-500 text-sm">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-blue-500">
+                Signup
+              </Link>
+            </p>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };

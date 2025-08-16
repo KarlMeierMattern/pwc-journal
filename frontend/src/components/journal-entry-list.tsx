@@ -8,10 +8,14 @@ import { JournalEntryCard } from "./journal-entry-card";
 import { JournalEntryForm } from "./journal-entry-form";
 import type { JournalEntry } from "@/types/journal.types";
 
-export const JournalEntryList = () => {
+export const JournalEntryList = ({
+  filters,
+}: {
+  filters?: { from?: string; to?: string };
+} = {}) => {
   const [editingEntry, setEditingEntry] = useState<JournalEntry | null>(null);
 
-  const { data: entries, isLoading, error } = useJournalEntries();
+  const { data: entries, isLoading, error } = useJournalEntries(filters);
   const updateMutation = useUpdateEntry();
   const deleteMutation = useDeleteEntry();
 
