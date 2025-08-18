@@ -4,10 +4,10 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 console.log("�� Main app env check:");
-console.log("DB_HOST:", process.env.DB_HOST ? "✅ Set" : "❌ Missing");
-console.log("DB_USER:", process.env.DB_USER ? "✅ Set" : "❌ Missing");
-console.log("DB_PASSWORD:", process.env.DB_PASSWORD ? "✅ Set" : "❌ Missing");
-console.log("DB_NAME:", process.env.DB_NAME ? "✅ Set" : "❌ Missing");
+console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD ? "***" : "❌ Missing");
+console.log("DB_NAME:", process.env.DB_NAME);
 console.log(
   "OPENAI_API_KEY:",
   process.env.OPENAI_API_KEY ? "✅ Set" : "❌ Missing"
@@ -38,10 +38,6 @@ import agentRouter from "./routes/agent-router.js";
 // Initialize Express
 const app = express();
 const port = process.env.PORT || 3000;
-
-// connect db
-
-// authentication
 
 // middleware
 const allowedOrigins =
