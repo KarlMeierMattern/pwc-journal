@@ -117,10 +117,8 @@
 
 ### Step 4.1: OpenAI Agent Setup
 
-- [❌] Install OpenAI: `npm install openai`
-- [❌] Create `backend/src/services/openai-service.ts` - OpenAI client
-- [❌] Create `backend/src/agents/journal-agent.ts` - Agent with DB tool
-- [❌] Create `backend/src/tools/database-tool.ts` - DB access tool
+- [✅] Install OpenAI: `npm install openai`
+- [✅] Create `backend/src/agents/journal-agent.ts` - Agent with DB tool
 - [❌] Create `backend/src/routes/summaries.ts` - Summary routes
 - [❌] Create `backend/src/controllers/summary-controller.ts` - Summary logic
 - [❌] Test agent can query journal entries by date range
