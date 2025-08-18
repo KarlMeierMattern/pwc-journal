@@ -5,7 +5,7 @@ import {
   getJournalEntryById,
   updateJournalEntry,
   deleteJournalEntry,
-} from "../controllers/journal-controller";
+} from "../controllers/journal-controller.js";
 
 import { authMiddleware } from "../middleware/auth-middleware.js";
 
