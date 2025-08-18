@@ -8,6 +8,10 @@ console.log("DB_HOST:", process.env.DB_HOST ? "✅ Set" : "❌ Missing");
 console.log("DB_USER:", process.env.DB_USER ? "✅ Set" : "❌ Missing");
 console.log("DB_PASSWORD:", process.env.DB_PASSWORD ? "✅ Set" : "❌ Missing");
 console.log("DB_NAME:", process.env.DB_NAME ? "✅ Set" : "❌ Missing");
+console.log(
+  "OPENAI_API_KEY:",
+  process.env.OPENAI_API_KEY ? "✅ Set" : "❌ Missing"
+);
 
 // Test database connection on startup
 import { testConnection } from "./config/database.js";
@@ -25,6 +29,7 @@ import cors from "cors";
 import router from "./routes/index.js";
 import authRouter from "./routes/auth-router.js";
 import journalRouter from "./routes/journal-router.js";
+import agentRouter from "./routes/agent-router.js";
 // import helmet from "helmet";
 // import xss from "xss-clean";
 // import hpp from "hpp";
@@ -76,6 +81,8 @@ app.use(express.urlencoded({ extended: true })); // converts form data to req.bo
 app.use("/api/v1", router);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/journal", journalRouter);
+app.use("/api/v1/agent", agentRouter);
+
 // start server
 app.listen(port, () => {
   console.log(`App listening on http://localhost:${port}`);
