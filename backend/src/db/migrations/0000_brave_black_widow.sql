@@ -10,7 +10,7 @@ CREATE TABLE `users` (
 --> statement-breakpoint
 CREATE TABLE `journal_entries` (
 	`id` serial AUTO_INCREMENT NOT NULL,
-	`userId` int NOT NULL,
+	`userId` bigint unsigned NOT NULL,
 	`content` text NOT NULL,
 	`createdAt` timestamp NOT NULL DEFAULT (now()),
 	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
@@ -19,7 +19,7 @@ CREATE TABLE `journal_entries` (
 --> statement-breakpoint
 CREATE TABLE `llm_cache` (
 	`id` serial AUTO_INCREMENT NOT NULL,
-	`userId` int NOT NULL,
+	`userId` bigint unsigned NOT NULL,
 	`fromDate` date NOT NULL,
 	`toDate` date NOT NULL,
 	`summaryText` text NOT NULL,

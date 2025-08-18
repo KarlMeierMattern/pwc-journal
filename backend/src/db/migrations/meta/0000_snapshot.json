@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "dee7b8d5-b843-4a5a-a8ba-a67fe77f3409",
-  "prevId": "dd2778d4-fa83-4cec-bbd9-76e2b748a711",
+  "id": "faffe040-4a51-4b89-bb11-eac4fc4d3034",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
       "name": "users",
@@ -19,20 +19,6 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
-        },
-        "firstName": {
-          "name": "firstName",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "lastName": {
-          "name": "lastName",
-          "type": "varchar(100)",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         },
         "passwordHash": {

@@ -5,7 +5,7 @@ dotenv.config();
 
 export default defineConfig({
   schema: "./src/db/schema/*",
-  out: "../db/migrations",
+  out: "./src/db/migrations",
   dialect: "mysql",
   dbCredentials: {
     host: process.env.DB_HOST || "localhost",

@@ -10,7 +10,7 @@ export const LLMResponse = ({
   if (!response) {
     return (
       <div className="text-gray-500 text-center py-8">
-        No summary available. Click "Get summary" to analyze your journal
+        No summary available. Click "Get summary" to analyse your journal
         entries.
       </div>
     );
