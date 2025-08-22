@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { hashPassword, comparePassword } from "../utils/password.js";
 import { generateToken } from "../utils/jwt.js";
 import { db } from "../config/database.js";
-import { users } from "../db/schema/users.js";
+import { users } from "../db/schema/tables.js";
 import { eq } from "drizzle-orm";
 
 export const signup = async (

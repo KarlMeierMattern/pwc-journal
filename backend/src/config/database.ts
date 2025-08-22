@@ -2,8 +2,7 @@
 
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
-import { users } from "../db/schema/users.js";
-import { journalEntries } from "../db/schema/journal-entries.js";
+import { users, journalEntries } from "../db/schema/tables.js";
 import { llmCache } from "../db/schema/llm-cache.js";
 import dotenv from "dotenv";
 

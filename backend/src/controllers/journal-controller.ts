@@ -6,7 +6,7 @@ import {
   journalEntries,
   type NewJournalEntry,
   type JournalEntry,
-} from "../db/schema/journal-entries.js";
+} from "../db/schema/tables.js";
 import { and, desc, eq, gte, lte } from "drizzle-orm";
 
 export const addJournalEntry = async (
