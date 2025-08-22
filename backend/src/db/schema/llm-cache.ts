@@ -6,7 +6,7 @@ import {
   date,
   timestamp,
 } from "drizzle-orm/mysql-core";
-import { users } from "./users.js";
+import { users } from "./users";
 
 export const llmCache = mysqlTable("llm_cache", {
   id: serial().primaryKey(),
