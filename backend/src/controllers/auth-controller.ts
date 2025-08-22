@@ -59,7 +59,7 @@ export const signup = async (
       domain:
         process.env.NODE_ENV === "development"
           ? "localhost"
-          : "167.235.142.148.sslip.io",
+          : ".167.235.142.148.sslip.io",
     });
 
     // return user
@@ -131,7 +131,7 @@ export const login = async (
       domain:
         process.env.NODE_ENV === "development"
           ? "localhost"
-          : "167.235.142.148.sslip.io",
+          : ".167.235.142.148.sslip.io",
     });
 
     // return user
