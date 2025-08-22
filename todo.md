@@ -170,6 +170,27 @@
 
 ---
 
+## Phase 6: Security & Production Hardening
+
+### Step 6.1: CSRF Protection
+
+- [❌] Install CSRF dependencies: `csurf express-rate-limit`
+- [❌] Create `backend/src/middleware/csrf-middleware.ts` - CSRF token generation/validation
+- [❌] Create `backend/src/middleware/rate-limit.ts` - Rate limiting for auth endpoints
+- [❌] Update `backend/src/routes/journal-router.ts` - Add CSRF protection to state-changing routes
+- [❌] Update `backend/src/routes/auth-router.ts` - Add CSRF protection to logout
+- [❌] Update `frontend/src/hooks/use-journal.ts` - Include CSRF tokens in requests
+- [❌] Update `frontend/src/hooks/use-auth.ts` - Handle CSRF token storage
+- [❌] Test CSRF protection prevents cross-site attacks
+
+### Step 6.2: JWT Security Hardening
+
+- [❌] Update `backend/src/utils/jwt.ts` - Add issuer, audience, better validation
+- [❌] Update `backend/src/middleware/auth-middleware.ts` - Better error handling
+- [❌] Test JWT security improvements
+
+---
+
 ## Deployment & Environment Setup
 
 ### Production Environment

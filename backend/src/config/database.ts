@@ -2,7 +2,9 @@
 
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
-import * as schema from "../db/schema/index.js";
+import { users } from "../db/schema/users.js";
+import { journalEntries } from "../db/schema/journal-entries.js";
+import { llmCache } from "../db/schema/llm-cache.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -20,7 +22,10 @@ const connection = mysql.createPool({
 });
 
 // Create Drizzle instance
-export const db = drizzle(connection, { schema, mode: "default" });
+export const db = drizzle(connection, {
+  schema: { users, journalEntries, llmCache },
+  mode: "default",
+});
 
 // Test database connection
 export const testConnection = async () => {
