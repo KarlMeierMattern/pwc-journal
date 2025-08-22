@@ -5,7 +5,7 @@ import {
   text,
   timestamp,
 } from "drizzle-orm/mysql-core";
-import { users } from "./users";
+import { users } from "./users.js";
 
 export const journalEntries = mysqlTable("journal_entries", {
   id: serial().primaryKey(),
