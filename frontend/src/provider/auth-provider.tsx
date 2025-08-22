@@ -1,3 +1,11 @@
+// The Flow:
+// AuthProvider → calls useAuth() hook
+// useAuth() → returns { user, isAuthenticated, authLoading, error }
+// AuthProvider → passes this value to AuthContext.Provider
+// AuthGuard → calls useAuthContext()
+// useAuthContext() → reads from AuthContext
+// AuthGuard → gets authLoading from context
+
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAuth } from "../hooks/use-auth";

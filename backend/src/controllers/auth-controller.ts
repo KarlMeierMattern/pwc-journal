@@ -56,7 +56,10 @@ export const signup = async (
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      // domain: process.env.COOKIE_DOMAIN,
+      domain:
+        process.env.NODE_ENV === "development"
+          ? "localhost"
+          : "167.235.142.148.sslip.io",
     });
 
     // return user
@@ -125,7 +128,10 @@ export const login = async (
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      // domain: process.env.COOKIE_DOMAIN,
+      domain:
+        process.env.NODE_ENV === "development"
+          ? "localhost"
+          : "167.235.142.148.sslip.io",
     });
 
     // return user
