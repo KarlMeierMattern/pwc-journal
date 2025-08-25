@@ -53,13 +53,10 @@ export const signup = async (
     // set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      // domain:
-      //   process.env.NODE_ENV === "development"
-      //     ? "localhost"
-      //     : ".167.235.142.148.sslip.io",
+      domain: ".167.235.142.148.sslip.io",
     });
 
     // return user
@@ -125,13 +122,10 @@ export const login = async (
     // set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      // domain:
-      //   process.env.NODE_ENV === "development"
-      //     ? "localhost"
-      //     : ".167.235.142.148.sslip.io",
+      domain: ".167.235.142.148.sslip.io",
     });
 
     // return user

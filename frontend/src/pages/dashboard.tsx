@@ -12,11 +12,11 @@ import { useState } from "react";
 export const Dashboard = () => {
   const [fromDate, setFromDate] = useState<Date>();
   const [toDate, setToDate] = useState<Date>();
-  const [isLoading, setIsLoading] = useState(false);
   const [llmResponse, setLlmResponse] = useState<JournalSummary>();
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const { user, authLoading } = useAuthContext();
   const logout = useLogout();
-  const navigate = useNavigate();
   const createMutation = useCreateEntry();
   const agentMutation = useAgent();
 
