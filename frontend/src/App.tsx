@@ -5,7 +5,7 @@ import { Login } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
 import { ProtectedRoute } from "@/components/protected-route";
 import { AuthGuard } from "@/components/auth-guard";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { AllEntries } from "./pages/all-entries";
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         <Route path="/all-entries" element={<AllEntries />} />
       </Routes>
     </AuthGuard>
