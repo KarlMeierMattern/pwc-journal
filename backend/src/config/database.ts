@@ -2,27 +2,21 @@
 
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
-import { users, journalEntries } from "../db/schema/tables.js";
-import { llmCache } from "../db/schema/llm-cache.js";
+import {
+  users,
+  journalEntries,
+  llmCache,
+  professionalFramework,
+} from "../db/schema/tables.js";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-// Create MySQL connection pool
-const connection = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT!),
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-});
+const connection = await mysql.createConnection(process.env.DB_URL!);
 
 // Create Drizzle instance
 export const db = drizzle(connection, {
-  schema: { users, journalEntries, llmCache },
+  schema: { users, journalEntries, llmCache, professionalFramework },
   mode: "default",
 });
 

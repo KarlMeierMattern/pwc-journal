@@ -8,6 +8,13 @@ import {
   type JournalEntry,
 } from "../db/schema/tables.js";
 import { and, desc, eq, gte, lte } from "drizzle-orm";
+import {
+  createJournalEntry,
+  findJournalEntries,
+  findJournalById,
+  updateJournalById,
+  deleteJournal,
+} from "../db/queries.js";
 
 export const addJournalEntry = async (
   req: Request<{}, {}, { content: string }, {}>,
@@ -29,7 +36,8 @@ export const addJournalEntry = async (
       content,
     };
 
-    const [createdEntry] = await db.insert(journalEntries).values(newEntry);
+    const [createdEntry] = await createJournalEntry(newEntry);
+
     return res.status(StatusCodes.CREATED).json({
       message: "Entry created successfully",
     });
@@ -58,13 +66,7 @@ export const getJournalEntries = async (
     if (to)
       conditions.push(lte(journalEntries.createdAt, new Date(to as string)));
 
-    const entries = await db
-      .select()
-      .from(journalEntries)
-      .where(and(...conditions))
-      .orderBy(desc(journalEntries.createdAt))
-      .limit(parseInt(limit as string))
-      .offset((parseInt(page as string) - 1) * parseInt(limit as string));
+    const entries = await findJournalEntries(conditions, limit, page);
 
     return res.status(StatusCodes.OK).json(entries);
   } catch (error) {
@@ -81,16 +83,7 @@ export const getJournalEntryById = async (
     const { userId } = req.user;
     const { id } = req.params;
 
-    const [entry] = await db
-      .select()
-      .from(journalEntries)
-      .where(
-        and(
-          eq(journalEntries.userId, userId),
-          eq(journalEntries.id, parseInt(id))
-        )
-      )
-      .limit(1);
+    const [entry] = await findJournalById(id, userId);
 
     if (!entry) {
       return res
@@ -121,16 +114,7 @@ export const updateJournalEntry = async (
     }
 
     // First check if entry exists
-    const [existingEntry] = await db
-      .select()
-      .from(journalEntries)
-      .where(
-        and(
-          eq(journalEntries.userId, userId),
-          eq(journalEntries.id, parseInt(id))
-        )
-      )
-      .limit(1);
+    const [existingEntry] = await findJournalById(id, userId);
 
     if (!existingEntry) {
       return res
@@ -138,28 +122,10 @@ export const updateJournalEntry = async (
         .json({ message: "Entry not found" });
     }
 
-    // Update the entry
-    await db
-      .update(journalEntries)
-      .set({ content })
-      .where(
-        and(
-          eq(journalEntries.userId, userId),
-          eq(journalEntries.id, parseInt(id))
-        )
-      );
+    await updateJournalById(id, userId, content);
 
     // Return the updated entry
-    const [updatedEntry] = await db
-      .select()
-      .from(journalEntries)
-      .where(
-        and(
-          eq(journalEntries.userId, userId),
-          eq(journalEntries.id, parseInt(id))
-        )
-      )
-      .limit(1);
+    const [updatedEntry] = await findJournalById(id, userId);
 
     return res.status(StatusCodes.OK).json({
       message: "Entry updated successfully",
@@ -179,15 +145,7 @@ export const deleteJournalEntry = async (
     const { userId } = req.user;
     const { id } = req.params;
 
-    const [entry] = await db
-      .select()
-      .from(journalEntries)
-      .where(
-        and(
-          eq(journalEntries.userId, userId),
-          eq(journalEntries.id, parseInt(id))
-        )
-      );
+    const [entry] = await findJournalById(id, userId);
 
     if (!entry) {
       return res
@@ -195,14 +153,7 @@ export const deleteJournalEntry = async (
         .json({ message: "Entry not found" });
     }
 
-    await db
-      .delete(journalEntries)
-      .where(
-        and(
-          eq(journalEntries.userId, userId),
-          eq(journalEntries.id, parseInt(id))
-        )
-      );
+    await deleteJournal(id, userId);
 
     return res.status(StatusCodes.OK).json({
       message: "Entry deleted successfully",

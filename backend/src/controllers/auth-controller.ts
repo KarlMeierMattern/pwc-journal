@@ -3,9 +3,7 @@ import { NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { hashPassword, comparePassword } from "../utils/password.js";
 import { generateToken } from "../utils/jwt.js";
-import { db } from "../config/database.js";
-import { users } from "../db/schema/tables.js";
-import { eq } from "drizzle-orm";
+import { finUserByEmail, createUser, findByUserId } from "../db/queries.js";
 
 export const signup = async (
   req: Request,
@@ -25,10 +23,8 @@ export const signup = async (
     }
 
     // check if user already exists
-    const existingUser = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email));
+    const existingUser = await finUserByEmail(email);
+
     if (existingUser.length > 0) {
       return res
         .status(StatusCodes.CONFLICT)
@@ -39,10 +35,7 @@ export const signup = async (
     const hashedPassword = await hashPassword(password);
 
     // update with hased password and create user
-    const [newUser] = await db.insert(users).values({
-      email,
-      passwordHash: hashedPassword,
-    });
+    const [newUser] = await createUser(email, hashedPassword);
 
     // generate token
     const token = generateToken(
@@ -93,10 +86,7 @@ export const login = async (
     }
 
     // check if user exists
-    const existingUser = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email));
+    const existingUser = await finUserByEmail(email);
 
     if (existingUser.length === 0) {
       return res
@@ -166,10 +156,7 @@ export const getMe = async (
   next: NextFunction
 ) => {
   try {
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.id, req.user.userId));
+    const [user] = await findByUserId(req.user.userId);
 
     if (!user) {
       return res

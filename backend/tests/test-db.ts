@@ -13,7 +13,7 @@ console.log("DB_NAME:", process.env.DB_NAME ? "✅ Set" : "❌ Missing");
 
 async function testDatabase() {
   const { testConnection, db } = await import("../src/config/database.js");
-  const { users } = await import("../src/db/schema/index.js");
+  const { users } = await import("../src/db/schema/users.ts");
 
   console.log("🔍 Testing MySQL database connection...");
 

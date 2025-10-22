@@ -15,6 +15,20 @@
       "when": 1755840750028,
       "tag": "0001_mean_thunderball",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1761147765588,
+      "tag": "0002_add_professional_framework",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1761147920790,
+      "tag": "0003_nosy_vengeance",
+      "breakpoints": true
     }
   ]
 }

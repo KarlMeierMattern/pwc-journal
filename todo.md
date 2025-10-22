@@ -221,3 +221,26 @@
 - [✅] CORS configuration for development and production
 - [✅] Environment variable setup for dev/prod
 - [✅] Initial deployment to Hetzner VPS via Coolify
+
+## Easy wins
+
+- [❌] change colour scheme and style to pwc
+- [❌] update placeholder text to guide user to fill out their daily journal (i.e. "what did you do today?", "what are you thinking about?", "what are you feeling?").
+- [❌] show some examples of journal entries (allow user to select button to view examples).
+- [❌] add mood buttons below the text area when selected there is a conversion that gets added to the journal entry
+- [❌] allow user to enter their manager level and edit it
+
+## Medium wins
+
+- [❌] allow users to backdate journal entries / mass import
+- [❌] align the output to the pwc professional framework
+- [❌] create database of pwc professional framework as well as the different manager levels and their responsibilities
+- [❌] have prompt summary output options (i.e. general summary, prepare for CRT performance evaluation, etc.)
+- [❌] output to email / pdf
+- [❌] give option to change perspective ("i", 3rd person etc.)
+- [❌] ability to edit output summary and update
+- [❌] allow user to add more context to the summary (and then regenerate summary)
+- [❌] break out key themes into an exec summary with short description of each.
+- [❌] emaill scheduling when missing daily update
+- [❌] add "rewrite with AI button" on individual journal entries
+- [❌] allow user to enter their goals
