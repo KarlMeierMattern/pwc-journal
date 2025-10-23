@@ -7,7 +7,7 @@ import {
   type NewJournalEntry,
   type JournalEntry,
 } from "../db/schema/tables.js";
-import { and, desc, eq, gte, lte } from "drizzle-orm";
+import { eq, gte, lte } from "drizzle-orm";
 import {
   createJournalEntry,
   findJournalEntries,
@@ -17,29 +17,34 @@ import {
 } from "../db/queries.js";
 
 export const addJournalEntry = async (
-  req: Request<{}, {}, { content: string }, {}>,
-  res: Response<{ message: string }>,
+  req: Request<{}, {}, { content: string; date: string }, {}>,
+  res: Response<{ message: string; newEntry?: NewJournalEntry }>,
   next: NextFunction
 ) => {
   try {
     const { userId } = req.user;
-    const { content } = req.body;
+    const { content, date } = req.body;
 
-    if (!content) {
+    if (!content || !date) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .send({ message: "Content is required" });
+        .send({ message: "Content and date are required" });
     }
+
+    const parsedDate = new Date(date);
+    const formattedDate = parsedDate.toISOString().split("T")[0];
 
     const newEntry: NewJournalEntry = {
       userId,
       content,
+      date: new Date(formattedDate),
     };
 
     const [createdEntry] = await createJournalEntry(newEntry);
 
     return res.status(StatusCodes.CREATED).json({
       message: "Entry created successfully",
+      newEntry: newEntry,
     });
   } catch (error) {
     next(error);
@@ -61,11 +66,16 @@ export const getJournalEntries = async (
     const { from, to, limit = "10", page = "1" } = req.query;
 
     const conditions = [eq(journalEntries.userId, userId)];
-    if (from)
-      conditions.push(gte(journalEntries.createdAt, new Date(from as string)));
-    if (to)
-      conditions.push(lte(journalEntries.createdAt, new Date(to as string)));
+    if (from) {
+      const formattedFrom = new Date(from);
+      formattedFrom.setHours(0, 0, 0, 0);
+      conditions.push(gte(journalEntries.date, formattedFrom));
+    }
 
+    if (to) {
+      const formattedTo = new Date(to);
+      conditions.push(lte(journalEntries.date, formattedTo));
+    }
     const entries = await findJournalEntries(conditions, limit, page);
 
     return res.status(StatusCodes.OK).json(entries);

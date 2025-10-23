@@ -2,6 +2,7 @@ export type JournalEntry = {
   id: number;
   userId: number;
   content: string;
+  date: string;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -14,22 +14,28 @@ export const useCreateEntry = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (content: string) => {
+    mutationFn: async ({
+      content,
+      date,
+    }: {
+      content: string;
+      date: string;
+    }) => {
       const response = await fetch(`${API_BASE_URL}/api/v1/journal`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify({ content, date }),
       });
       if (!response.ok) {
         throw new Error("Failed to create journal entry");
       }
       return response.json();
     },
+    // Invalidate and refetch journal entries instead of trying to access non-existent data
     onSuccess: () => {
-      // Invalidate and refetch journal entries instead of trying to access non-existent data
       queryClient.invalidateQueries({ queryKey: ["journal", "entries"] });
     },
     onError: () => {

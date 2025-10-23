@@ -21,11 +21,7 @@ import { testConnection } from "./config/database.js";
 // Add this after your environment check:
 console.log("🔍 Testing database connection on startup...");
 
-testConnection()
-  .then(() => console.log("✅ Database connection successful on startup"))
-  .catch((error) =>
-    console.log("❌ Database connection failed on startup:", error.message)
-  );
+testConnection();
 
 // security packages
 import cors from "cors";

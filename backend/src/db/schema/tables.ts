@@ -22,6 +22,7 @@ export const journalEntries = mysqlTable("journal_entries", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   content: text().notNull(),
+  date: date().notNull(),
   createdAt: timestamp().defaultNow().notNull(),
   updatedAt: timestamp().defaultNow().onUpdateNow().notNull(),
 });

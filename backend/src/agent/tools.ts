@@ -17,12 +17,14 @@ export const journalAgentTool = tool({
     const conditions = [eq(journalEntries.userId, userId)];
 
     if (from) {
-      conditions.push(gte(journalEntries.createdAt, new Date(from as string)));
+      const formattedFrom = new Date(from);
+      formattedFrom.setHours(0, 0, 0, 0);
+      conditions.push(gte(journalEntries.date, formattedFrom));
     }
+
     if (to) {
-      const toDate = new Date(to as string);
-      toDate.setDate(toDate.getDate() + 1);
-      conditions.push(lte(journalEntries.createdAt, toDate));
+      const formattedTo = new Date(to);
+      conditions.push(lte(journalEntries.date, formattedTo));
     }
 
     const entries = await db

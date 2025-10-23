@@ -34,7 +34,7 @@ export const findJournalEntries = async (
     .select()
     .from(journalEntries)
     .where(and(...conditions))
-    .orderBy(desc(journalEntries.createdAt))
+    .orderBy(desc(journalEntries.date))
     .limit(parseInt(limit))
     .offset((parseInt(page) - 1) * parseInt(limit));
 };

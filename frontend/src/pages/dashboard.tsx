@@ -28,8 +28,8 @@ export const Dashboard = () => {
     });
   };
 
-  const handleCreateEntry = (content: string) => {
-    createMutation.mutate(content);
+  const handleCreateEntry = (content: string, date: string) => {
+    createMutation.mutate({ content, date });
   };
 
   const handleResponse = async () => {
