@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { LLMResponse } from "@/components/llm-response";
 import { useAgent, type JournalSummary } from "@/hooks/use-agent";
 import { JournalEntryFilters } from "@/components/journal-entry-filters";
+import { Settings } from "@/components/settings-modal";
 import { useState } from "react";
 
 export const Dashboard = () => {
@@ -50,10 +51,11 @@ export const Dashboard = () => {
     <div className="min-h-screen p-8 bg-stone-50 font-geist">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-8">
+          <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-2">
             Journal
           </h1>
           <Button onClick={() => navigate("/all-entries")}>All entries</Button>
+          <Settings />
         </div>
         <div className="bg-white rounded-xl shadow-sm p-6 mb-6 ">
           <JournalEntryForm onSave={handleCreateEntry} />
@@ -64,7 +66,7 @@ export const Dashboard = () => {
             <button
               disabled={logout.isPending}
               onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
+              className="bg-custom-orange-dark hover:bg-custom-orange-medium text-white px-4 py-2 rounded-md transition-colors cursor-pointer"
             >
               {logout.isPending ? "Logging out..." : "Logout"}
             </button>

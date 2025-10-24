@@ -33,7 +33,7 @@ export const LLMResponse = ({
           {response.keyThemes.map((theme, index) => (
             <span
               key={index}
-              className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+              className="bg-custom-orange-dark text-white px-3 py-1 rounded-full text-sm"
             >
               {theme}
             </span>

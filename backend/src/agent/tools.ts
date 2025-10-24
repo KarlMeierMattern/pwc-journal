@@ -1,8 +1,8 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { db } from "../config/database.js";
-import { journalEntries } from "../db/schema/tables.js";
-import { and, eq, gte, lte } from "drizzle-orm";
+import { journalEntries, professionalFramework } from "../db/schema/tables.js";
+import { and, eq, gte, lte, asc } from "drizzle-orm";
 
 export const journalAgentTool = tool({
   name: "getJournalEntries",
@@ -30,7 +30,23 @@ export const journalAgentTool = tool({
     const entries = await db
       .select()
       .from(journalEntries)
-      .where(and(...conditions));
+      .where(and(...conditions))
+      .orderBy(asc(journalEntries.date));
+
+    return entries;
+  },
+});
+
+export const professionalFrameworkTool = tool({
+  name: "getProfessionalFramework",
+  description: "Get the professional framework from the database",
+  parameters: z.object({}),
+  strict: true,
+  execute: async () => {
+    const entries = await db
+      .select()
+      .from(professionalFramework)
+      .orderBy(asc(professionalFramework.id));
 
     return entries;
   },

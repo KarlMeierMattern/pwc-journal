@@ -1,7 +1,7 @@
 import { Agent } from "@openai/agents";
 import { z } from "zod";
-import { journalAgentPrompt } from "./prompt.js";
-import { journalAgentTool } from "./tools.js";
+import { professionalGradeExpectationsPrompt } from "./professional-grade-expectations.js";
+import { journalAgentTool, professionalFrameworkTool } from "./tools.js";
 
 const journalAgentSchema = z.object({
   summary: z
@@ -23,9 +23,9 @@ export type JournalAgentOutput = z.infer<typeof journalAgentSchema>;
 
 export const journalAgent = new Agent({
   name: "JournalAgent",
-  instructions: journalAgentPrompt,
+  instructions: professionalGradeExpectationsPrompt,
   outputType: journalAgentSchema,
   modelSettings: { toolChoice: "required" },
-  tools: [journalAgentTool],
+  tools: [professionalFrameworkTool, journalAgentTool],
   model: process.env.OPENAI_MODEL,
 });
