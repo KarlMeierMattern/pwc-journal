@@ -3,13 +3,23 @@ import {
   users,
   journalEntries,
   type NewJournalEntry,
-  type JournalEntry,
 } from "../db/schema/tables.js";
 import { eq, and, desc, type SQL } from "drizzle-orm";
 
-type UserIdColumn = typeof journalEntries.userId;
+// prod test
+(async () => {
+  try {
+    const result = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, "karlmeiermattern@gmail.com"));
+    console.log("Result:", result);
+  } catch (e) {
+    console.error("Query failed:", e);
+  }
+})();
 
-export const finUserByEmail = async (email: string) => {
+export const findUserByEmail = async (email: string) => {
   return await db.select().from(users).where(eq(users.email, email));
 };
 

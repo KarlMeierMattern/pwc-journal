@@ -54,6 +54,7 @@ export const Dashboard = () => {
           <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-2">
             Journal
           </h1>
+          
           <Button onClick={() => navigate("/all-entries")}>All entries</Button>
           <Settings />
         </div>

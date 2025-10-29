@@ -3,7 +3,7 @@ import { NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { hashPassword, comparePassword } from "../utils/password.js";
 import { generateToken } from "../utils/jwt.js";
-import { finUserByEmail, createUser, findByUserId } from "../db/queries.js";
+import { findUserByEmail, createUser, findByUserId } from "../db/queries.js";
 
 export const signup = async (
   req: Request,
@@ -23,7 +23,7 @@ export const signup = async (
     }
 
     // check if user already exists
-    const existingUser = await finUserByEmail(email);
+    const existingUser = await findUserByEmail(email);
 
     if (existingUser.length > 0) {
       return res
@@ -86,7 +86,7 @@ export const login = async (
     }
 
     // check if user exists
-    const existingUser = await finUserByEmail(email);
+    const existingUser = await findUserByEmail(email);
 
     if (existingUser.length === 0) {
       return res
