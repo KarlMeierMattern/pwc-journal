@@ -42,19 +42,26 @@ export const LLMResponse = ({
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">
-          Mood Analysis
-        </h3>
-        <p className="text-gray-700 leading-relaxed">{response.moodAnalysis}</p>
-      </div>
-
-      <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-2">Insights</h3>
         <ul className="space-y-2">
           {response.insights.map((insight, index) => (
             <li key={index} className="text-gray-700 flex items-start">
               <span className="text-green-500 mr-2 mt-1">•</span>
               {insight}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-semibold text-gray-800 mb-2">
+          PwC Evolved Professional Framework
+        </h3>
+        <ul className="space-y-3">
+          {Object.entries(response.framework).map(([key, value]) => (
+            <li key={key}>
+              <p className="font-medium text-gray-800 capitalize">{key}</p>
+              <p className="text-gray-700 mt-1">{value}</p>
             </li>
           ))}
         </ul>

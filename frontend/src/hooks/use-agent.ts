@@ -4,8 +4,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export type JournalSummary = {
   summary: string;
   keyThemes: string[];
-  moodAnalysis: string;
   insights: string[];
+  framework: {
+    inspire: string;
+    empower: string;
+    evolve: string;
+    champion: string;
+    build: string;
+    deliver: string;
+  };
   entryCount: number;
   dateRange: {
     from: string;
