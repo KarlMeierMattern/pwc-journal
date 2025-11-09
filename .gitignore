@@ -29,3 +29,4 @@ docker-compose.override.yml.bak
 docker-compose.override.yml.bak.1
 docker-compose.override.yml.bak.2
 docker-compose.override.yml.bak.3
+.vercel
