@@ -116,7 +116,7 @@ export const login = async (
     res.cookie("token", token, {
       httpOnly: true, // Prevents JavaScript access to cookie (blocks XSS attacks)
       secure: process.env.NODE_ENV === "production", // Cookie sent over HTTPS
-      sameSite: "lax", // Blocks cross-site requests except navigation links (prevents CSRF attacks)
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Blocks cross-site requests except navigation links (prevents CSRF attacks)
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       domain:
         process.env.NODE_ENV === "production"
