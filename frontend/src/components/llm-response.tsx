@@ -46,7 +46,7 @@ export const LLMResponse = ({
         <ul className="space-y-2">
           {response.insights.map((insight, index) => (
             <li key={index} className="text-gray-700 flex items-start">
-              <span className="text-green-500 mr-2 mt-1">•</span>
+              <span className="text-black mr-2 mt-1">•</span>
               {insight}
             </li>
           ))}
