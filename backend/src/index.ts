@@ -39,10 +39,15 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // middleware
+// const allowedOrigins =
+//   process.env.NODE_ENV === "development"
+//     ? [process.env.FRONTEND_DEV_URL, "http://localhost:5173"]
+//     : [process.env.FRONTEND_PROD_URL].filter(Boolean);
+
 const allowedOrigins =
-  process.env.NODE_ENV === "development"
-    ? [process.env.FRONTEND_DEV_URL, "http://localhost:5173"]
-    : [process.env.FRONTEND_PROD_URL].filter(Boolean); // removes falsy values
+  process.env.NODE_ENV === "production"
+    ? [process.env.FRONTEND_PROD_URL]
+    : ["http://localhost:5173"];
 
 console.log("NODE_ENV:", process.env.NODE_ENV);
 console.log("Allowed Origins:", allowedOrigins);
