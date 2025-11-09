@@ -6,9 +6,8 @@ import type {
 
 const API_BASE_URL =
   import.meta.env.VITE_ENV === "development"
-    ? import.meta.env.VITE_BACKEND_DEV_URL || "http://localhost:3000"
-    : import.meta.env.VITE_BACKEND_PROD_URL ||
-      "http://lkogk8wo88koc4404g0wws48.167.235.142.148.sslip.io";
+    ? import.meta.env.VITE_BACKEND_DEV_URL
+    : import.meta.env.VITE_BACKEND_PROD_URL;
 
 export const useCreateEntry = () => {
   const queryClient = useQueryClient();

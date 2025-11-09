@@ -34,15 +34,8 @@ import agentRouter from "./routes/agent-router.js";
 // import hpp from "hpp";
 // import rateLimit from "express-rate-limit";
 
-// Initialize Express
 const app = express();
 const port = process.env.PORT || 3000;
-
-// middleware
-// const allowedOrigins =
-//   process.env.NODE_ENV === "development"
-//     ? [process.env.FRONTEND_DEV_URL, "http://localhost:5173"]
-//     : [process.env.FRONTEND_PROD_URL].filter(Boolean);
 
 const allowedOrigins =
   process.env.NODE_ENV === "production"
