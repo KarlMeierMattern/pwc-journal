@@ -9,9 +9,4 @@ export default defineConfig({
     environment: "jsdom",
     // setupFiles: ["./src/test/setup.ts"],
   },
-  preview: {
-    host: true, // allows 0.0.0.0
-    port: 8080, // must match exposed container port
-    allowedHosts: ["pwcjournal.notlocalhost.ink"], // add your domain here
-  },
 });
