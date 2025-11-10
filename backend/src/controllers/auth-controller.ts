@@ -51,7 +51,7 @@ export const signup = async (
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       domain:
         process.env.NODE_ENV === "production"
-          ? ".notlocalhost.ink"
+          ? "pwc-journal.vercel.app"
           : "localhost",
     });
 
@@ -120,7 +120,7 @@ export const login = async (
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       domain:
         process.env.NODE_ENV === "production"
-          ? ".notlocalhost.ink"
+          ? "pwc-journal.vercel.app"
           : "localhost",
     });
 
