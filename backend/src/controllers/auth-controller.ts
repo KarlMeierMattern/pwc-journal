@@ -47,9 +47,9 @@ export const signup = async (
     res.cookie("token", token, {
       httpOnly: true, // Prevents JavaScript access to cookie (blocks XSS attacks)
       secure: process.env.NODE_ENV === "production", // Cookie sent over HTTPS
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Blocks cross-site requests except navigation links (prevents CSRF attacks)
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allows cross-site requests in prod but CORS restricts the origins
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      domain: undefined,
+      domain: undefined, // Cookie tied to backend host; works for any frontend.
       // process.env.NODE_ENV === "production"
       //   ? ".notlocalhost.ink"
       //   : "localhost",
@@ -116,9 +116,9 @@ export const login = async (
     res.cookie("token", token, {
       httpOnly: true, // Prevents JavaScript access to cookie (blocks XSS attacks)
       secure: process.env.NODE_ENV === "production", // Cookie sent over HTTPS
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Blocks cross-site requests except navigation links (prevents CSRF attacks)
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Allows cross-site requests in prod but CORS restricts the origins
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      domain: undefined,
+      domain: undefined, // Cookie tied to backend host; works for any frontend.
       // process.env.NODE_ENV === "production"
       //   ? ".notlocalhost.ink"
       //   : "localhost",
