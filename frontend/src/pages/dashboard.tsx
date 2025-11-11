@@ -51,7 +51,7 @@ export const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex justify-center p-8 font-geist bg-gradient-to-br from-stone-100 via-stone-300 to-orange-400">
-      <div className="p-8 w-fit bg-stone-50/50 rounded-xl shadow-md border-1 border-white backdrop-blur-3xl">
+      <div className="p-8 bg-stone-50/30 w-full max-w-4xl rounded-xl shadow-md border-1 border-white backdrop-blur-3xl">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center">
             <div className="mb-4">
@@ -77,7 +77,7 @@ export const Dashboard = () => {
           </div>
 
           <div className="flex items-center mb-6 justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex gap-2">
               <JournalEntryFilters
                 text="From"
                 date={fromDate}
@@ -89,24 +89,26 @@ export const Dashboard = () => {
                 onDateChange={setToDate}
               />
             </div>
-            <Button
-              className="text-stone-600 font-normal mx-2 bg-stone-50/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
-              variant="outline"
-              onClick={() => {
-                setFromDate(undefined);
-                setToDate(undefined);
-              }}
-            >
-              Clear filters
-            </Button>
-            <Button
-              className="text-stone-600 font-normal mx-2 bg-stone-50/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
-              disabled={isLoading}
-              variant="outline"
-              onClick={() => handleResponse()}
-            >
-              {isLoading ? "Getting summary..." : "Get summary"}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                className="text-stone-600 font-normal mx-2 bg-stone-50/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
+                variant="outline"
+                onClick={() => {
+                  setFromDate(undefined);
+                  setToDate(undefined);
+                }}
+              >
+                Clear filters
+              </Button>
+              <Button
+                className="text-stone-600 font-normal mx-2 bg-stone-50/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
+                disabled={isLoading}
+                variant="outline"
+                onClick={() => handleResponse()}
+              >
+                {isLoading ? "Getting summary..." : "Get summary"}
+              </Button>
+            </div>
           </div>
           <div className="bg-stone-100 rounded-xl shadow-sm p-6 mb-6">
             <LLMResponse response={llmResponse} isLoading={isLoading} />
@@ -115,7 +117,7 @@ export const Dashboard = () => {
             <button
               disabled={logout.isPending}
               onClick={handleLogout}
-              className="bg-custom-orange-dark hover:bg-custom-orange-medium text-white px-4 py-2 rounded-md transition-colors cursor-pointer"
+              className=" px-4 py-2 text-white font-normal mx-2 bg-orange-400 shadow-stone-400 shadow-md hover:bg-orange-300 rounded-md transition-colors duration-200 cursor-pointer"
             >
               {logout.isPending ? "Logging out..." : "Logout"}
             </button>

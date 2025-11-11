@@ -86,7 +86,7 @@ export const JournalEntryForm = ({
         )}
       </div>
 
-      <div className="flex justify-end gap-2">
+      <div className="flex justify-end gap-2 ">
         <JournalEntryFilters
           text="Date"
           date={dateObj}

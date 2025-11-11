@@ -9,9 +9,8 @@ export const LLMResponse = ({
 }) => {
   if (!response) {
     return (
-      <div className="text-stone-600 text-center py-8 bg-stone-100/80">
-        No summary available. Click "Get summary" to analyse your journal
-        entries.
+      <div className="text-stone-600 text-sm text-center py-8 bg-stone-100/80">
+        Click "Get summary" to analyse your journal entries.
       </div>
     );
   }

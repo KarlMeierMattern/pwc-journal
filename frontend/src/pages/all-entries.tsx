@@ -10,7 +10,7 @@ export const AllEntries = () => {
   const [toDate, setToDate] = useState<Date>();
   return (
     <div className="min-h-screen flex justify-center p-8 font-geist bg-gradient-to-br from-stone-100 via-stone-300 to-orange-400">
-      <div className="p-8 w-fit bg-stone-50/50 rounded-xl shadow-md border-1 border-white backdrop-blur-3xl">
+      <div className="p-8 w-full max-w-4xl bg-stone-50/30 rounded-xl shadow-md border-1 border-white backdrop-blur-3xl">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center">
             <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-8">
