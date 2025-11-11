@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const resetAuth = () => setAuthKey((prev) => prev + 1);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient} key={authKey}>
       <AuthManagerContext.Provider value={{ resetAuth }}>
         <AuthContextProvider>{children}</AuthContextProvider>
       </AuthManagerContext.Provider>
