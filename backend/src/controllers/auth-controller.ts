@@ -49,10 +49,10 @@ export const signup = async (
       secure: process.env.NODE_ENV === "production", // Cookie sent over HTTPS
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Blocks cross-site requests except navigation links (prevents CSRF attacks)
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      domain:
-        process.env.NODE_ENV === "production"
-          ? ".notlocalhost.ink"
-          : "localhost",
+      domain: undefined,
+      // process.env.NODE_ENV === "production"
+      //   ? ".notlocalhost.ink"
+      //   : "localhost",
     });
 
     // return user
@@ -118,10 +118,10 @@ export const login = async (
       secure: process.env.NODE_ENV === "production", // Cookie sent over HTTPS
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Blocks cross-site requests except navigation links (prevents CSRF attacks)
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      domain:
-        process.env.NODE_ENV === "production"
-          ? ".notlocalhost.ink"
-          : "localhost",
+      domain: undefined,
+      // process.env.NODE_ENV === "production"
+      //   ? ".notlocalhost.ink"
+      //   : "localhost",
     });
 
     // return user
