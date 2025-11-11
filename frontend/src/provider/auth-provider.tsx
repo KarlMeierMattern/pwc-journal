@@ -9,7 +9,7 @@
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useAuth } from "../hooks/use-auth";
-import { AuthContext } from "../context/auth-context";
+import { AuthContext, AuthManagerContext } from "../context/auth-context";
 
 // Auth context provider
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -24,9 +24,16 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
 
+  const [authKey, setAuthKey] = useState(0);
+
+  // resetAuth works by changing a React key, which forces React to fully re-mount the AuthContextProvider — wiping its internal state and all React Query caches inside it.
+  const resetAuth = () => setAuthKey((prev) => prev + 1);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>{children}</AuthContextProvider>
+      <AuthManagerContext.Provider value={{ resetAuth }}>
+        <AuthContextProvider>{children}</AuthContextProvider>
+      </AuthManagerContext.Provider>
     </QueryClientProvider>
   );
 };

@@ -83,6 +83,7 @@ export const useSignup = () => {
     onSuccess: (response: AuthResponse) => {
       // set current user in cache
       queryClient.setQueryData(["auth", "current-user"], response.user);
+      queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
     },
     onError: () => {
       // remove current user from cache if signup fails
@@ -121,6 +122,7 @@ export const useLogin = () => {
     onSuccess: (response: AuthResponse) => {
       // set current user in cache
       queryClient.setQueryData(["auth", "current-user"], response.user);
+      queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
     },
     onError: () => {
       // remove current user from cache if login fails

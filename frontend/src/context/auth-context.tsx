@@ -17,3 +17,13 @@ export const useAuthContext = () => {
   }
   return context;
 };
+
+export const AuthManagerContext = createContext<{
+  resetAuth: () => void;
+} | null>(null);
+
+export const useAuthManager = () => {
+  const ctx = useContext(AuthManagerContext);
+  if (!ctx) throw new Error("useAuthManager must be used within AuthProvider");
+  return ctx;
+};

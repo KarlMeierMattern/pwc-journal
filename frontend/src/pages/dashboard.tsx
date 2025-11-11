@@ -1,4 +1,4 @@
-import { useAuthContext } from "../context/auth-context";
+import { useAuthContext, useAuthManager } from "../context/auth-context";
 import { useLogout } from "../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
 import { JournalEntryForm } from "@/components/journal-entry-form";
@@ -18,12 +18,14 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const { user, authLoading } = useAuthContext();
   const logout = useLogout();
+  const { resetAuth } = useAuthManager();
   const createMutation = useCreateEntry();
   const agentMutation = useAgent();
 
   const handleLogout = () => {
     logout.mutate(undefined, {
       onSuccess: () => {
+        resetAuth();
         navigate("/login", { replace: true });
       },
     });
@@ -54,7 +56,7 @@ export const Dashboard = () => {
           <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-2">
             Journal
           </h1>
-          
+
           <Button onClick={() => navigate("/all-entries")}>All entries</Button>
           <Settings />
         </div>
