@@ -105,10 +105,19 @@ export const JournalEntryForm = ({
             )
           }
         />
-        <Button type="button" variant="outline" onClick={handleCancel}>
+        <Button
+          className="text-stone-600 font-normal px-4 py-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
+          type="button"
+          variant="outline"
+          onClick={handleCancel}
+        >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button
+          className="text-stone-100 font-normal px-4 py-2 bg-stone-600/80 shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-200 cursor-pointer"
+          type="submit"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Saving..." : entry ? "Update" : "Create"}
         </Button>
       </div>
