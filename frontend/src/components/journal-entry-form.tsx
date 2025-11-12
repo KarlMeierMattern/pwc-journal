@@ -15,11 +15,25 @@ const journalSchema = z.object({
 
 type JournalFormData = z.infer<typeof journalSchema>;
 
+// function parseLocalDate(dateString: string | undefined): Date | undefined {
+//   if (!dateString) return undefined;
+//   const [year, month, day] = dateString.split("-");
+//   if (!year || !month || !day) return undefined;
+//   return new Date(Number(year), Number(month) - 1, Number(day));
+// }
+
 function parseLocalDate(dateString: string | undefined): Date | undefined {
   if (!dateString) return undefined;
-  const [year, month, day] = dateString.split("-");
-  if (!year || !month || !day) return undefined;
-  return new Date(Number(year), Number(month) - 1, Number(day));
+
+  // Try YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+    const [year, month, day] = dateString.split("-");
+    return new Date(Number(year), Number(month) - 1, Number(day));
+  }
+
+  // Try ISO string
+  const date = new Date(dateString);
+  return isNaN(date.getTime()) ? undefined : date;
 }
 
 export const JournalEntryForm = ({
@@ -73,20 +87,23 @@ export const JournalEntryForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 ">
-      <div>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4 w-full max-w-2xl">
+        {" "}
+        {/* match your Textarea max width */}
         <Textarea
           id="content"
           {...register("content")}
           placeholder="Write your thoughts..."
-          rows={8}
+          rows={10}
         />
         {errors.content && (
           <p className="text-sm text-red-500 mt-1">{errors.content.message}</p>
         )}
       </div>
 
-      <div className="flex justify-end gap-2 ">
+      <div className="flex flex-col gap-4 w-full max-w-2xl">
+        {" "}
         <JournalEntryFilters
           text="Date"
           date={dateObj}
@@ -106,19 +123,19 @@ export const JournalEntryForm = ({
           }
         />
         <Button
+          className="text-stone-100 font-normal px-4 py-2 bg-stone-600/80 shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-200 cursor-pointer"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Saving..." : entry ? "Update" : "Create"}
+        </Button>
+        <Button
           className="text-stone-600 font-normal px-4 py-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
           type="button"
           variant="outline"
           onClick={handleCancel}
         >
           Cancel
-        </Button>
-        <Button
-          className="text-stone-100 font-normal px-4 py-2 bg-stone-600/80 shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-200 cursor-pointer"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Saving..." : entry ? "Update" : "Create"}
         </Button>
       </div>
     </form>

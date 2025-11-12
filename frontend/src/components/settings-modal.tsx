@@ -11,7 +11,7 @@ export const Settings = () => {
         className="text-stone-600 font-normal p-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
         onClick={() => setSelected(true)}
       >
-        <SettingsIcon className="w-5 h-5" />
+        <SettingsIcon className="w-4 h-4" />
       </button>
 
       {selected && (
