@@ -145,7 +145,13 @@ export const logout = async (
   next: NextFunction
 ) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/", // must match login
+      // domain: optional, only if you set domain at login
+    });
     res.status(StatusCodes.OK).json({ message: "Logout successful" });
   } catch (error) {
     next(error);
