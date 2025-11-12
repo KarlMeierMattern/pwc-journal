@@ -61,7 +61,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
-
+app.set("trust proxy", 1);
 app.use(cookieParser());
 app.use(express.json()); // req.body parser
 app.use(express.urlencoded({ extended: true })); // converts form data to req.body
