@@ -1,8 +1,5 @@
 // // Production Gaps:
-// ✅ Password type attributes - both password fields should have type="password"
-// ✅ Loading state handling - form should be disabled during submission
 // ❌ Success feedback - no indication when signup succeeds
-// ❌ Navigation - no redirect after successful signup
 // ❌ Form validation feedback - missing visual indicators for required fields
 // ❌ Password visibility toggle
 // ❌ Form accessibility (labels, ARIA)
@@ -11,6 +8,7 @@
 // ❌ Password strength indicator
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useSignup } from "../hooks/use-auth";
 import { signUpSchema, type SignUpSchema } from "../types/signup.types.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +23,9 @@ import {
 } from "@/components/ui/card";
 
 export const Signup = () => {
+  const [showPswd, setShowPswd] = useState<boolean>(false);
+  const [showConfirmPswd, setShowConfirmPswd] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   const {
@@ -82,25 +83,43 @@ export const Signup = () => {
                 {errors.email.message as string}
               </p>
             )}
-            <input
-              disabled={signupMutation.isPending}
-              placeholder="Password"
-              {...register("password")}
-              type="password"
-              className="text-gray-700 px-6 py-2 text-sm rounded-lg bg-white bg-opacity-80 placeholder-gray-400 focus:outline-none border-1 border-gray-300"
-            />
+            <div className="relative flex items-center rounded-lg border border-gray-300 bg-white bg-opacity-80">
+              <input
+                disabled={signupMutation.isPending}
+                placeholder="Password"
+                {...register("password")}
+                type={showPswd ? "text" : "password"}
+                className="flex-1 text-gray-700 px-6 py-2 text-sm bg-transparent placeholder-gray-400 focus:outline-none"
+              />
+              <button
+                type="button"
+                className="px-3 text-gray-500 hover:text-gray-400 text-xs cursor-pointer"
+                onClick={() => setShowPswd(!showPswd)}
+              >
+                {showPswd ? "hide" : "show"}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
                 {errors.password.message as string}
               </p>
             )}
-            <input
-              disabled={signupMutation.isPending}
-              placeholder="Confirm Password"
-              type="password"
-              {...register("confirmPassword")}
-              className="text-gray-700 px-6 py-2 text-sm rounded-lg bg-white bg-opacity-80 placeholder-gray-400 focus:outline-none border-1 border-gray-300"
-            />
+            <div className="relative flex items-center rounded-lg border border-gray-300 bg-white bg-opacity-80">
+              <input
+                disabled={signupMutation.isPending}
+                placeholder="Confirm Password"
+                type={showConfirmPswd ? "text" : "password"}
+                {...register("confirmPassword")}
+                className="flex-1 text-gray-700 px-6 py-2 text-sm bg-transparent placeholder-gray-400 focus:outline-none"
+              />
+              <button
+                type="button"
+                className="px-3 text-gray-500 hover:text-gray-400 text-xs cursor-pointer"
+                onClick={() => setShowConfirmPswd(!showConfirmPswd)}
+              >
+                {showConfirmPswd ? "hide" : "show"}
+              </button>
+            </div>
             {errors.confirmPassword && (
               <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
                 {errors.confirmPassword.message as string}

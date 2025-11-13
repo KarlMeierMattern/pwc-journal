@@ -20,8 +20,8 @@ import {
 } from "@/components/ui/card";
 
 export const Login = () => {
-  const navigate = useNavigate();
   const [showPswd, setShowPswd] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const {
     register,
