@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
-import { db } from "../config/database.js";
 import {
   journalEntries,
   type NewJournalEntry,

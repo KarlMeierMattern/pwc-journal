@@ -4,13 +4,13 @@
 // ❌ Success feedback - no indication when signup succeeds
 // ❌ Navigation - no redirect after successful signup
 // ❌ Form validation feedback - missing visual indicators for required fields
-// ❌ Password visibility toggle
 // ❌ Form accessibility (labels, ARIA)
 // ❌ Rate limiting protection
 // ❌ CSRF protection
 // ❌ Password strength indicator
 
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useLogin } from "../hooks/use-auth";
 import { loginSchema, type LoginSchema } from "../types/login.types.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,6 +26,7 @@ import {
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [showPswd, setShowPswd] = useState<boolean>(false);
 
   const {
     register,
@@ -82,13 +83,22 @@ export const Login = () => {
                 {errors.email.message as string}
               </p>
             )}
-            <input
-              disabled={loginMutation.isPending}
-              placeholder="Password"
-              {...register("password")}
-              type="password"
-              className="text-gray-700 px-6 py-2 text-sm rounded-lg bg-white bg-opacity-80 placeholder-gray-400 focus:outline-none border-1 border-gray-300"
-            />
+            <div className="relative flex items-center rounded-lg border border-gray-300 bg-white bg-opacity-80">
+              <input
+                disabled={loginMutation.isPending}
+                placeholder="Password"
+                {...register("password")}
+                type={showPswd ? "text" : "password"}
+                className="flex-1 text-gray-700 px-6 py-2 text-sm bg-transparent placeholder-gray-400 focus:outline-none"
+              />
+              <button
+                type="button"
+                className="px-3 text-gray-500 hover:text-gray-400 text-xs cursor-pointer"
+                onClick={() => setShowPswd(!showPswd)}
+              >
+                {showPswd ? "hide" : "show"}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
                 {errors.password.message as string}
