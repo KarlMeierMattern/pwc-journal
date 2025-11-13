@@ -12,22 +12,56 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const connection = await mysql.createConnection(process.env.DB_URL!);
+const pool = mysql.createPool({
+  uri: process.env.DB_URL!,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
 
-// Create Drizzle instance
-export const db = drizzle(connection, {
+// drizzle instance
+export const db = drizzle(pool, {
   schema: { users, journalEntries, llmCache, professionalFramework },
   mode: "default",
 });
 
-// Test database connection
+// test db connection
 export const testConnection = async () => {
   try {
-    const result = await connection.execute("SELECT 1");
+    const [rows] = await pool.query("SELECT 1");
     console.log("✅ Database connected successfully");
-    return result;
+    return rows;
   } catch (error) {
     console.error("❌ Database connection failed:", error);
     throw error;
   }
 };
+
+// optional: keepalive ping
+setInterval(async () => {
+  try {
+    await pool.query("SELECT 1");
+  } catch (err) {
+    console.error("MySQL keepalive failed:", err);
+  }
+}, 1000 * 60 * 5);
+
+// const connection = await mysql.createConnection(process.env.DB_URL!);
+
+// // Create Drizzle instance
+// export const db = drizzle(connection, {
+//   schema: { users, journalEntries, llmCache, professionalFramework },
+//   mode: "default",
+// });
+
+// // Test database connection
+// export const testConnection = async () => {
+//   try {
+//     const result = await connection.execute("SELECT 1");
+//     console.log("✅ Database connected successfully");
+//     return result;
+//   } catch (error) {
+//     console.error("❌ Database connection failed:", error);
+//     throw error;
+//   }
+// };
