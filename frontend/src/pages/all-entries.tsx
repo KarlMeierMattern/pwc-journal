@@ -10,14 +10,14 @@ export const AllEntries = () => {
   const [toDate, setToDate] = useState<Date>();
   return (
     <div className="min-h-screen flex justify-center p-8 font-geist bg-gradient-to-br from-stone-100 via-stone-300 to-orange-400">
-      <div className="p-8 w-full max-w-4xl bg-stone-50/30 rounded-xl shadow-md border-1 border-white backdrop-blur-3xl">
+      <div className="p-8 w-full max-w-2xl h-fit bg-stone-50/30 rounded-xl shadow-md border-1 border-white backdrop-blur-3xl">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center">
-            <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-8">
+            <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-4">
               All Journal Entries
             </h1>
             <Button
-              className="text-stone-600 font-normal px-4 py-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
+              className="w-full max-w-1/3 text-xs text-stone-600 font-normal px-4 py-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
               onClick={() => navigate("/dashboard")}
             >
               Back to Dashboard
@@ -35,17 +35,17 @@ export const AllEntries = () => {
                 date={toDate}
                 onDateChange={setToDate}
               />
+              <Button
+                className="text-xs text-stone-600 font-normal px-4 py-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
+                variant="outline"
+                onClick={() => {
+                  setFromDate(undefined);
+                  setToDate(undefined);
+                }}
+              >
+                Clear filters
+              </Button>
             </div>
-            <Button
-              className="text-stone-600 font-normal px-4 py-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
-              variant="outline"
-              onClick={() => {
-                setFromDate(undefined);
-                setToDate(undefined);
-              }}
-            >
-              Clear filters
-            </Button>
           </div>
           <JournalEntryList
             filters={{

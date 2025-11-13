@@ -8,6 +8,7 @@ import { LLMResponse } from "@/components/llm-response";
 import { useAgent, type JournalSummary } from "@/hooks/use-agent";
 import { JournalEntryFilters } from "@/components/journal-entry-filters";
 import { Settings } from "@/components/settings-modal";
+import { SettingsOverlay } from "@/components/settings-overlay";
 import { useState } from "react";
 
 export const Dashboard = () => {
@@ -15,6 +16,7 @@ export const Dashboard = () => {
   const [toDate, setToDate] = useState<Date>();
   const [llmResponse, setLlmResponse] = useState<JournalSummary>();
   const [isLoading, setIsLoading] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const { user, authLoading } = useAuthContext();
   const logout = useLogout();
@@ -51,9 +53,9 @@ export const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex justify-center p-8 font-geist bg-gradient-to-br from-stone-100 via-stone-300 to-orange-400">
-      <div className="p-8 bg-stone-50/30 w-full max-w-2xl rounded-xl shadow-md backdrop-blur-3xl">
-        <div className="flex justify-between items-center">
-          <div className="mb-4">
+      <div className="p-8 bg-stone-50/30 w-full max-w-2xl h-fit rounded-xl shadow-md backdrop-blur-3xl">
+        <div className="flex justify-between items-center mb-4">
+          <div>
             <h1 className="text-4xl font-semibold text-gray-800 tracking-tight mb-2">
               Journal
             </h1>
@@ -66,14 +68,14 @@ export const Dashboard = () => {
             >
               Entries
             </Button>
-            <Settings />
-            <button
+            <Settings onOpen={() => setSettingsOpen(true)} />
+            <Button
               disabled={logout.isPending}
               onClick={handleLogout}
               className="text-xs px-4 py-2 text-white font-normal bg-orange-400 shadow-stone-400 shadow-md hover:bg-orange-300 rounded-md transition-colors duration-200 cursor-pointer"
             >
               {logout.isPending ? "Logging out..." : "Logout"}
-            </button>
+            </Button>
           </div>
         </div>
         <div className="bg-stone-50 rounded-xl shadow-sm p-6 mb-6 w-full">
@@ -94,7 +96,7 @@ export const Dashboard = () => {
             />
           </div>
           <Button
-            className="text-stone-600 font-normal bg-stone-50/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
+            className="text-xs text-stone-600 font-normal bg-stone-50/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
             variant="outline"
             onClick={() => {
               setFromDate(undefined);
@@ -105,7 +107,7 @@ export const Dashboard = () => {
           </Button>
         </div>
         <Button
-          className="w-full max-4-2xl mb-4 text-stone-100 font-normal px-4 py-2 bg-stone-600/80 shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-200 cursor-pointer"
+          className="w-full max-4-2xl mb-4 text-stone-100 font-normal px-4 py-2 bg-stone-600/80 border-none shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-200 cursor-pointer"
           disabled={isLoading}
           variant="outline"
           onClick={() => handleResponse()}
@@ -116,6 +118,9 @@ export const Dashboard = () => {
           <LLMResponse response={llmResponse} isLoading={isLoading} />
         </div>
       </div>
+      {settingsOpen && (
+        <SettingsOverlay onClose={() => setSettingsOpen(false)} />
+      )}
     </div>
   );
 };

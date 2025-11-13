@@ -27,7 +27,7 @@ export const JournalEntryFilters = ({
         <Button
           variant="outline"
           data-empty={!date}
-          className="justify-start text-left text-stone-600 font-normal bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
+          className="text-xs justify-start text-left text-stone-600 font-normal bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
         >
           <CalendarIcon />
           {date ? format(date, "PPP") : <span>{text}</span>}

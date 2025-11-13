@@ -1,10 +1,5 @@
 // // Production Gaps:
-// ✅ Password type attributes - both password fields should have type="password"
-// ✅ Loading state handling - form should be disabled during submission
 // ❌ Success feedback - no indication when signup succeeds
-// ❌ Navigation - no redirect after successful signup
-// ❌ Form validation feedback - missing visual indicators for required fields
-// ❌ Form accessibility (labels, ARIA)
 // ❌ Rate limiting protection
 // ❌ CSRF protection
 // ❌ Password strength indicator

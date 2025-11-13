@@ -87,15 +87,16 @@ export const JournalEntryForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 ">
       <div className="flex flex-col gap-4 w-full max-w-2xl">
         {" "}
         {/* match your Textarea max width */}
         <Textarea
+          className="bg-stone-50"
           id="content"
           {...register("content")}
           placeholder="Write your thoughts..."
-          rows={10}
+          rows={4}
         />
         {errors.content && (
           <p className="text-sm text-red-500 mt-1">{errors.content.message}</p>
