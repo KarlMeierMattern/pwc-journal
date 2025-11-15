@@ -27,9 +27,7 @@ export const JournalEntryList = ({
   };
 
   const handleDelete = async (id: number) => {
-    if (confirm("Are you sure you want to delete this entry?")) {
-      deleteMutation.mutate({ id: id.toString() });
-    }
+    deleteMutation.mutate({ id: id.toString() });
   };
 
   // Updated handleSave to include date
