@@ -64,17 +64,21 @@ export const findJournalById = async (id: string, userId: any) => {
 
 export const updateJournalById = async (
   id: string,
-  userId: any,
-  content: string
+  userId: number,
+  content: string,
+  date: string // "YYYY-MM-DD"
 ) => {
+  // Create a Date object at local midnight
+  const formattedDate = new Date(date + "T00:00:00");
+
   return await db
     .update(journalEntries)
-    .set({ content })
+    .set({
+      content,
+      date: formattedDate,
+    })
     .where(
-      and(
-        eq(journalEntries.userId, userId),
-        eq(journalEntries.id, parseInt(id))
-      )
+      and(eq(journalEntries.userId, userId), eq(journalEntries.id, Number(id)))
     );
 };
 

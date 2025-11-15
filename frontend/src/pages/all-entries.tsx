@@ -58,7 +58,7 @@ export const AllEntries = () => {
               to: toDate
                 ? (() => {
                     const endDate = new Date(toDate);
-                    endDate.setDate(endDate.getDate() + 1);
+                    endDate.setDate(endDate.getDate());
                     return endDate.toISOString();
                   })()
                 : undefined,

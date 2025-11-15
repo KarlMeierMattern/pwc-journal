@@ -2,8 +2,6 @@
 
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-
-// import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -12,34 +10,45 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export const JournalEntryFilters = ({
+import { useMemo } from "react";
+
+export const JournalEntryFiltersString = ({
   text,
   date,
   onDateChange,
 }: {
   text: string;
-  date?: Date;
-  onDateChange: (date: Date | undefined) => void;
+  date: string;
+  onDateChange: (date: string) => void;
 }) => {
+  const dateObj = useMemo(() => (date ? new Date(date) : undefined), [date]);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          data-empty={!date}
+          data-empty={!dateObj}
           className="text-xs justify-start text-left text-stone-600 font-normal bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>{text}</span>}
+          {dateObj ? format(dateObj, "PPP") : <span>{text}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        {/* <Calendar mode="single" selected={date} onSelect={onDateChange} /> */}
         <Calendar
           mode="single"
-          selected={date ? new Date(date) : undefined} // string -> Date for calendar
+          selected={dateObj}
           onSelect={(selectedDate: Date | undefined) => {
-            onDateChange(selectedDate); // pass Date, not string
+            const formatted = selectedDate
+              ? `${selectedDate.getFullYear()}-${String(
+                  selectedDate.getMonth() + 1
+                ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(
+                  2,
+                  "0"
+                )}`
+              : "";
+            onDateChange(formatted);
           }}
         />
       </PopoverContent>

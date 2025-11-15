@@ -107,14 +107,14 @@ export const getJournalEntryById = async (
 };
 
 export const updateJournalEntry = async (
-  req: Request<{ id: string }, {}, { content: string }, {}>,
+  req: Request<{ id: string }, {}, { content: string; date: string }, {}>,
   res: Response<{ message: string; entry: JournalEntry } | { message: string }>,
   next: NextFunction
 ) => {
   try {
     const { userId } = req.user;
     const { id } = req.params;
-    const { content } = req.body;
+    const { content, date } = req.body;
 
     if (!content) {
       return res
@@ -131,7 +131,7 @@ export const updateJournalEntry = async (
         .json({ message: "Entry not found" });
     }
 
-    await updateJournalById(id, userId, content);
+    await updateJournalById(id, userId, content, date);
 
     // Return the updated entry
     const [updatedEntry] = await findJournalById(id, userId);

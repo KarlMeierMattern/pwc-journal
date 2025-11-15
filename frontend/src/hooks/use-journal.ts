@@ -107,10 +107,21 @@ export const useUpdateEntry = () => {
   return useMutation<
     JournalEntryResponse,
     Error,
-    { id: string; content: string }
+    { id: string; content: string; date?: string } // added date here
   >({
-    mutationFn: async ({ id, content }: { id: string; content: string }) => {
+    mutationFn: async ({
+      id,
+      content,
+      date,
+    }: {
+      id: string;
+      content: string;
+      date?: string;
+    }) => {
       if (!id || !content) throw new Error("Missing required parameters");
+
+      const body: any = { content };
+      if (date) body.date = date;
 
       const response = await fetch(`${API_BASE_URL}/api/v1/journal/${id}`, {
         method: "PATCH",
@@ -118,7 +129,7 @@ export const useUpdateEntry = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify(body),
       });
       if (!response.ok) {
         throw new Error("Failed to update journal entry");

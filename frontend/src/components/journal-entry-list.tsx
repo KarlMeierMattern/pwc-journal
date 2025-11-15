@@ -5,7 +5,7 @@ import {
   useDeleteEntry,
 } from "@/hooks/use-journal";
 import { JournalEntryCard } from "./journal-entry-card";
-import { JournalEntryForm } from "./journal-entry-form";
+import { JournalEntryFormEdit } from "./journal-entry-form-edit";
 import type { JournalEntry } from "@/types/journal.types";
 
 export const JournalEntryList = ({
@@ -32,10 +32,11 @@ export const JournalEntryList = ({
     }
   };
 
-  const handleSave = (content: string) => {
+  // Updated handleSave to include date
+  const handleSave = (content: string, date: string) => {
     if (editingEntry) {
       updateMutation.mutate(
-        { id: editingEntry.id.toString(), content },
+        { id: editingEntry.id.toString(), content, date },
         {
           onSuccess: () => setEditingEntry(null),
         }
@@ -68,7 +69,7 @@ export const JournalEntryList = ({
       {entries.map((entry) => (
         <div key={entry.id}>
           {editingEntry?.id === entry.id ? (
-            <JournalEntryForm
+            <JournalEntryFormEdit
               entry={editingEntry}
               onSave={handleSave}
               onCancel={() => setEditingEntry(null)}
