@@ -62,8 +62,8 @@ export const getJournalEntries = async (
 ) => {
   try {
     const { userId } = req.user;
+
     const { from, to } = req.query;
-    // const { from, to, limit = "10", page = "1" } = req.query;
 
     const conditions = [eq(journalEntries.userId, userId)];
     if (from) {
@@ -76,7 +76,7 @@ export const getJournalEntries = async (
       const formattedTo = new Date(to);
       conditions.push(lte(journalEntries.date, formattedTo));
     }
-    const entries = await findJournalEntries(conditions, limit, page);
+    const entries = await findJournalEntries(conditions);
 
     return res.status(StatusCodes.OK).json(entries);
   } catch (error) {

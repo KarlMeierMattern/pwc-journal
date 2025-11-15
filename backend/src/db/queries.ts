@@ -35,18 +35,12 @@ export const createJournalEntry = async (newEntry: NewJournalEntry) => {
   return await db.insert(journalEntries).values(newEntry);
 };
 
-export const findJournalEntries = async (
-  conditions: SQL<unknown>[],
-  limit: string,
-  page: string
-) => {
+export const findJournalEntries = async (conditions: SQL<unknown>[]) => {
   return await db
     .select()
     .from(journalEntries)
     .where(and(...conditions))
-    .orderBy(desc(journalEntries.date))
-    .limit(parseInt(limit))
-    .offset((parseInt(page) - 1) * parseInt(limit));
+    .orderBy(desc(journalEntries.date));
 };
 
 export const findJournalById = async (id: string, userId: any) => {
