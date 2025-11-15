@@ -1,8 +1,5 @@
-// // Production Gaps:
-// ❌ Success feedback - no indication when signup succeeds
-// ❌ Rate limiting protection
-// ❌ CSRF protection
-// ❌ Password strength indicator
+// Add Toast for successful signup
+// Add CSRF protection
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";

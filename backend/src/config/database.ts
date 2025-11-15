@@ -1,5 +1,3 @@
-// Create database connection
-
 import { drizzle } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import {
@@ -37,7 +35,7 @@ export const testConnection = async () => {
   }
 };
 
-// optional: keepalive ping
+// keepalive ping
 setInterval(async () => {
   try {
     await pool.query("SELECT 1");

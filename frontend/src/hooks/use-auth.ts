@@ -6,7 +6,6 @@ import type {
   User,
 } from "../types/auth.types";
 
-// get API base URL from environment variables
 const API_BASE_URL =
   import.meta.env.VITE_ENV === "development"
     ? import.meta.env.VITE_BACKEND_DEV_URL
@@ -35,8 +34,8 @@ export const useCurrentUser = () => {
         throw error;
       }
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     retry: false,
   });
 };
@@ -47,13 +46,12 @@ export const useAuth = () => {
 
   return {
     user: data || null,
-    isAuthenticated: !!data, // converts value to boolean - true if user logged in
+    isAuthenticated: !!data,
     authLoading: isLoading,
     error,
   };
 };
 
-// Invoke QueryClient in order to manually update cache after successful signup
 export const useSignup = () => {
   const queryClient = useQueryClient();
 
@@ -81,18 +79,15 @@ export const useSignup = () => {
       return response.json();
     },
     onSuccess: (response: AuthResponse) => {
-      // set current user in cache
       queryClient.setQueryData(["auth", "current-user"], response.user);
       queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
     },
     onError: () => {
-      // remove current user from cache if signup fails
       queryClient.removeQueries({ queryKey: ["auth", "current-user"] });
     },
   });
 };
 
-// Invoke QueryClient in order to manually update cache after successful login
 export const useLogin = () => {
   const queryClient = useQueryClient();
 
@@ -120,18 +115,15 @@ export const useLogin = () => {
       return response.json();
     },
     onSuccess: (response: AuthResponse) => {
-      // set current user in cache
       queryClient.setQueryData(["auth", "current-user"], response.user);
       queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
     },
     onError: () => {
-      // remove current user from cache if login fails
       queryClient.removeQueries({ queryKey: ["auth", "current-user"] });
     },
   });
 };
 
-// Invoke QueryClient in order to manually update cache after successful logout
 export const useLogout = () => {
   const queryClient = useQueryClient();
 
@@ -158,7 +150,6 @@ export const useLogout = () => {
       return response.json();
     },
     onSuccess: () => {
-      // Clear all cached data on logout
       queryClient.clear();
     },
   });

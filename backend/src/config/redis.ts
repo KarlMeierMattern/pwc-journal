@@ -1,14 +1,12 @@
 import { Redis } from "@upstash/redis";
 
-// Create Upstash Redis client using REST API
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 });
 
-const DEFAULT_CACHE_TIME = 604800; // 1 hour in seconds
+const DEFAULT_CACHE_TIME = 604800; // 1 hour
 
-// Test Redis connection
 export const testRedisConnection = async () => {
   try {
     const result = await redis.ping();
@@ -20,9 +18,7 @@ export const testRedisConnection = async () => {
   }
 };
 
-// Cache utility functions
 export const cacheService = {
-  // Get cached value
   get: async (key: string) => {
     try {
       return await redis.get(key);
@@ -31,10 +27,7 @@ export const cacheService = {
       return null;
     }
   },
-
-  // Set cached value with TTL
   set: async (key: string, value: any, expireTime = DEFAULT_CACHE_TIME) => {
-    // Default 7 days
     try {
       return await redis.setex(key, expireTime, JSON.stringify(value));
     } catch (error) {
@@ -42,8 +35,6 @@ export const cacheService = {
       return null;
     }
   },
-
-  // Delete cached value
   delete: async (key: string) => {
     try {
       return await redis.del(key);

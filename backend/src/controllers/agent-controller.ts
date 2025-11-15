@@ -17,7 +17,6 @@ export const getJournalSummary = async (
     const { userId } = req.user;
     const { from, to } = req.query;
 
-    // Create input message for the agent with context
     const dateRange =
       from && to ? `from ${from} to ${to}` : "for all available dates";
     const input = `Please analyze journal entries for userId: ${userId} ${dateRange} and provide a comprehensive summary. Use the getJournalEntries tool with userId: ${userId}${
@@ -26,7 +25,6 @@ export const getJournalSummary = async (
 
     const result = await run(journalAgent, input);
 
-    // Extract the clean JSON output from the agent result
     const cleanOutput = result.finalOutput as JournalAgentOutput;
 
     res.status(StatusCodes.OK).json(cleanOutput);

@@ -7,17 +7,17 @@ import {
 import { eq, and, desc, type SQL } from "drizzle-orm";
 
 // prod test
-// (async () => {
-//   try {
-//     const result = await db
-//       .select()
-//       .from(users)
-//       .where(eq(users.email, "karlmeiermattern@gmail.com"));
-//     console.log("Result:", result);
-//   } catch (e) {
-//     console.error("Query failed:", e);
-//   }
-// })();
+(async () => {
+  try {
+    const result = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, "karlmeiermattern@gmail.com"));
+    console.log("Result:", result);
+  } catch (e) {
+    console.error("Query failed:", e);
+  }
+})();
 
 export const findUserByEmail = async (email: string) => {
   return await db.select().from(users).where(eq(users.email, email));

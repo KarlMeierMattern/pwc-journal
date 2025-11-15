@@ -1,6 +1,15 @@
+// import helmet from "helmet";
+// import xss from "xss-clean";
+// import hpp from "hpp";
+// import rateLimit from "express-rate-limit";
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import authRouter from "./routes/auth-router.js";
+import journalRouter from "./routes/journal-router.js";
+import agentRouter from "./routes/agent-router.js";
+import { testConnection } from "./config/database.js";
 dotenv.config();
 
 console.log("�� Main app env check:");
@@ -15,24 +24,9 @@ console.log(
   process.env.OPENAI_API_KEY ? "✅ Set" : "❌ Missing"
 );
 
-// Test database connection on startup
-import { testConnection } from "./config/database.js";
-
-// Add this after your environment check:
+// Test db connection
 console.log("🔍 Testing database connection on startup...");
-
 testConnection();
-
-// security packages
-import cors from "cors";
-import router from "./routes/index.js";
-import authRouter from "./routes/auth-router.js";
-import journalRouter from "./routes/journal-router.js";
-import agentRouter from "./routes/agent-router.js";
-// import helmet from "helmet";
-// import xss from "xss-clean";
-// import hpp from "hpp";
-// import rateLimit from "express-rate-limit";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -61,22 +55,16 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
+// app.options("*", cors());
 app.set("trust proxy", 1);
 app.use(cookieParser());
-app.use(express.json()); // req.body parser
-app.use(express.urlencoded({ extended: true })); // converts form data to req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// error handling
-
-// reverse proxy (trust proxy)
-
-// routes
-app.use("/api/v1", router);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/journal", journalRouter);
 app.use("/api/v1/agent", agentRouter);
 
-// start server
 app.listen(port, () => {
   console.log(`App listening on http://localhost:${port}`);
 });

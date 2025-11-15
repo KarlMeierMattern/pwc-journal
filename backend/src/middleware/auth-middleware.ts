@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { verifyToken } from "../utils/jwt.js";
 
-// Middleware to authenticate requests
 export const authMiddleware = (
   req: Request,
   res: Response,
