@@ -10,6 +10,8 @@ import { JournalEntryFilters } from "@/components/journal-entry-filters";
 import { Settings } from "@/components/settings-modal";
 import { SettingsOverlay } from "@/components/settings-overlay";
 import { useState } from "react";
+import { GitHubChart } from "@/components/github-chart";
+import { useLastMonthEntries } from "@/hooks/use-journal";
 
 export const Dashboard = () => {
   const [fromDate, setFromDate] = useState<Date>();
@@ -23,6 +25,7 @@ export const Dashboard = () => {
   const { resetAuth } = useAuthManager();
   const createMutation = useCreateEntry();
   const agentMutation = useAgent();
+  const { data } = useLastMonthEntries();
 
   const handleLogout = () => {
     logout.mutate(undefined, {
@@ -61,6 +64,7 @@ export const Dashboard = () => {
             </h1>
             <p className="text-gray-600 text-xs">Logged in as {user?.email}</p>
           </div>
+
           <div className="flex items-center gap-2">
             <Button
               className="text-xs text-stone-600 font-normal px-4 py-2 bg-stone-100/80 shadow-stone-400 shadow-md hover:bg-stone-200 rounded-md transition-colors duration-200 cursor-pointer"
@@ -107,17 +111,23 @@ export const Dashboard = () => {
           </Button>
         </div>
         <Button
-          className="w-full max-4-2xl mb-4 text-stone-100 font-normal px-4 py-2 bg-stone-600/80 border-none shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-200 cursor-pointer"
+          className={`w-full max-4-2xl mb-4 text-stone-100 font-normal px-4 py-2 bg-stone-600/80 border-none shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-300 cursor-pointer ${
+            isLoading ? "animate-pulse" : ""
+          }`}
           disabled={isLoading}
-          variant="outline"
           onClick={() => handleResponse()}
         >
           {isLoading ? "Getting summary..." : "Get summary"}
         </Button>
+
         <div className="bg-stone-100 rounded-xl shadow-sm p-6 mb-6">
           <LLMResponse response={llmResponse} isLoading={isLoading} />
         </div>
+        <div className="flex justify-center">
+          <GitHubChart data={data ?? []} />
+        </div>
       </div>
+
       {settingsOpen && (
         <SettingsOverlay onClose={() => setSettingsOpen(false)} />
       )}

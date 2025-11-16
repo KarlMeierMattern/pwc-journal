@@ -1,4 +1,6 @@
 import type { JournalSummary } from "@/hooks/use-agent";
+import { useState } from "react";
+import { Copy } from "lucide-react";
 
 export const LLMResponse = ({
   response,
@@ -7,6 +9,31 @@ export const LLMResponse = ({
   response?: JournalSummary;
   isLoading: boolean;
 }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyAll = async () => {
+    if (!response) return;
+
+    // Combine all text fields into a single string
+    const textToCopy = [
+      "Summary:\n" + response.summary,
+      "Key Themes:\n" + response.keyThemes.join(", "),
+      "Insights:\n" + response.insights.join("\n"),
+      "Framework:\n" +
+        Object.entries(response.framework)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join("\n"),
+    ].join("\n\n");
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
   if (!response) {
     return (
       <div className="text-stone-600 text-sm text-center py-8 bg-stone-100/80">
@@ -21,6 +48,15 @@ export const LLMResponse = ({
 
   return (
     <div className="space-y-6 font-geist text-stone-600 bg-stone-100/80">
+      <div className="flex justify-end items-center space-x-2">
+        <Copy
+          className={`w-5 h-5 cursor-pointer transition ${
+            copied ? "text-stone-400" : "text-stone-600"
+          }`}
+          onClick={handleCopyAll}
+        />
+        {copied && <span className="text-sm text-stone-400">Copied!</span>}
+      </div>
       <div>
         <h3 className="text-lg font-semibold text-stone-800 mb-2">Summary</h3>
         <p className="text-gray-700 leading-relaxed">{response.summary}</p>

@@ -83,23 +83,23 @@ export const useJournalEntries = (params?: {
   });
 };
 
-export const useJournalEntry = (id?: string) => {
-  return useQuery<JournalEntry>({
-    queryKey: ["journal", "entry", id],
-    queryFn: async () => {
-      if (!id) throw new Error("Journal entry ID is required");
+// export const useJournalEntry = (id?: string) => {
+//   return useQuery<JournalEntry>({
+//     queryKey: ["journal", "entry", id],
+//     queryFn: async () => {
+//       if (!id) throw new Error("Journal entry ID is required");
 
-      const response = await fetch(`${API_BASE_URL}/api/v1/journal/${id}`, {
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch journal entry");
-      }
-      return response.json();
-    },
-    enabled: !!id,
-  });
-};
+//       const response = await fetch(`${API_BASE_URL}/api/v1/journal/${id}`, {
+//         credentials: "include",
+//       });
+//       if (!response.ok) {
+//         throw new Error("Failed to fetch journal entry");
+//       }
+//       return response.json();
+//     },
+//     enabled: !!id,
+//   });
+// };
 
 export const useUpdateEntry = () => {
   const queryClient = useQueryClient();
@@ -169,6 +169,26 @@ export const useDeleteEntry = () => {
     },
     onError: () => {
       queryClient.removeQueries({ queryKey: ["journal", "entries"] });
+    },
+  });
+};
+
+export const useLastMonthEntries = () => {
+  return useQuery<JournalEntry[]>({
+    queryKey: ["journal", "last-month"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${API_BASE_URL}/api/v1/journal/last-month`,
+        {
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch journal entries");
+      }
+
+      return response.json();
     },
   });
 };

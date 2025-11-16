@@ -6,29 +6,42 @@ import {
   bigint,
   text,
   date,
+  index,
+  int,
 } from "drizzle-orm/mysql-core";
 
-export const users = mysqlTable("users", {
-  id: serial().primaryKey(),
-  email: varchar({ length: 255 }).notNull().unique(),
-  passwordHash: varchar({ length: 255 }).notNull(),
-  createdAt: timestamp().defaultNow().notNull(),
-  updatedAt: timestamp().defaultNow().onUpdateNow().notNull(),
-});
+export const users = mysqlTable(
+  "users",
+  {
+    id: serial("id").primaryKey(),
+    email: varchar({ length: 255 }).notNull().unique(),
+    passwordHash: varchar({ length: 255 }).notNull(),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().defaultNow().onUpdateNow().notNull(),
+  },
+  (table) => [index("idx_user_email").on(table.email)]
+);
 
-export const journalEntries = mysqlTable("journal_entries", {
-  id: serial().primaryKey(),
-  userId: bigint({ mode: "number", unsigned: true })
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  content: text().notNull(),
-  date: date().notNull(),
-  createdAt: timestamp().defaultNow().notNull(),
-  updatedAt: timestamp().defaultNow().onUpdateNow().notNull(),
-});
+export const journalEntries = mysqlTable(
+  "journal_entries",
+  {
+    id: serial("id").primaryKey(),
+    userId: bigint({ mode: "number", unsigned: true })
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    content: text().notNull(),
+    date: date().notNull(),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().defaultNow().onUpdateNow().notNull(),
+  },
+  (table) => [
+    index("index_journal_entries_date").on(table.date),
+    index("index_journal_entries_user_id").on(table.userId),
+  ]
+);
 
 export const llmCache = mysqlTable("llm_cache", {
-  id: serial().primaryKey(),
+  id: serial("id").primaryKey(),
   userId: bigint({ mode: "number", unsigned: true })
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -39,7 +52,7 @@ export const llmCache = mysqlTable("llm_cache", {
 });
 
 export const professionalFramework = mysqlTable("professional_framework", {
-  id: serial().primaryKey(),
+  id: serial("id").primaryKey(),
   topic: text().notNull(),
   goal: text().notNull(),
   description: text().notNull(),

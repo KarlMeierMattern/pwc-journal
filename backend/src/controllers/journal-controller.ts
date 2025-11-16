@@ -13,6 +13,7 @@ import {
   findJournalById,
   updateJournalById,
   deleteJournal,
+  lastMonthEntries,
 } from "../db/queries.js";
 
 export const addJournalEntry = async (
@@ -168,6 +169,24 @@ export const deleteJournalEntry = async (
     return res.status(StatusCodes.OK).json({
       message: "Entry deleted successfully",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getLastMonthEntries = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const entries = await lastMonthEntries(req.user.userId);
+    if (!entries || entries.length === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "No entries found" });
+    }
+    return res.status(StatusCodes.OK).json(entries);
   } catch (error) {
     next(error);
   }

@@ -4,7 +4,7 @@ import {
   journalEntries,
   type NewJournalEntry,
 } from "../db/schema/tables.js";
-import { eq, and, desc, type SQL } from "drizzle-orm";
+import { eq, and, desc, gte, type SQL } from "drizzle-orm";
 
 // prod test
 (async () => {
@@ -85,4 +85,21 @@ export const deleteJournal = async (id: string, userId: any) => {
         eq(journalEntries.id, parseInt(id))
       )
     );
+};
+
+export const lastMonthEntries = async (userId: number) => {
+  const today = new Date();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(today.getDate() - 30);
+
+  return await db
+    .select()
+    .from(journalEntries)
+    .where(
+      and(
+        eq(journalEntries.userId, userId),
+        gte(journalEntries.date, thirtyDaysAgo)
+      )
+    )
+    .orderBy(desc(journalEntries.date));
 };

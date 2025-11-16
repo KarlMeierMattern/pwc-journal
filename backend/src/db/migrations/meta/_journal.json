@@ -36,6 +36,20 @@
       "when": 1761204584972,
       "tag": "0004_aromatic_speed_demon",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1763305523906,
+      "tag": "0005_familiar_jack_power",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1763305596207,
+      "tag": "0006_medical_spitfire",
+      "breakpoints": true
     }
   ]
 }
