@@ -43,13 +43,12 @@ export const signup = async (
     res.cookie("token", token, {
       httpOnly: true, // prevent JS access to cookie (block XSS)
       secure: process.env.NODE_ENV === "production", // HTTPS
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // allow cross-site requests in prod but CORS restricts the origins
+      sameSite: "lax", // Use "lax" for subdomains (same root domain) - works better on mobile
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      // domain: undefined, // Cookie tied to backend host; works for any frontend.
-      // domain:
-      //   process.env.NODE_ENV === "production"
-      //     ? ".notlocalhost.ink"
-      //     : "localhost",
+      domain:
+        process.env.NODE_ENV === "production"
+          ? ".notlocalhost.ink" // Root domain with leading dot for subdomain sharing
+          : undefined,
     });
 
     res.status(StatusCodes.CREATED).json({
@@ -108,13 +107,12 @@ export const login = async (
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      sameSite: "lax", // Use "lax" for subdomains (same root domain) - works better on mobile
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      // domain: undefined, // Cookie tied to backend host; works for any frontend.
-      // domain:
-      //   process.env.NODE_ENV === "production"
-      //     ? ".notlocalhost.ink"
-      //     : "localhost",
+      domain:
+        process.env.NODE_ENV === "production"
+          ? ".notlocalhost.ink" // Root domain with leading dot for subdomain sharing
+          : undefined,
     });
 
     res.status(StatusCodes.OK).json({
@@ -138,9 +136,12 @@ export const logout = async (
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      sameSite: "lax",
       path: "/", // must match login
-      // domain: optional, only if you set domain at login
+      domain:
+        process.env.NODE_ENV === "production"
+          ? ".notlocalhost.ink" // Must match domain used in login/signup
+          : undefined,
     });
     res.status(StatusCodes.OK).json({ message: "Logout successful" });
   } catch (error) {
