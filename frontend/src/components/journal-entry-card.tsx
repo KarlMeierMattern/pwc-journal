@@ -11,9 +11,9 @@ export const JournalEntryCard = ({
   onDelete: (id: number) => void;
 }) => {
   return (
-    <div className="flex flex-col gap-y-4 p-4 border rounded-lg shadow-sm bg-stone-100 font-geist text-sm">
+    <div className="flex flex-col gap-y-4 p-4 border rounded-lg shadow-sm bg-stone-100 font-geist text-xs sm:text-sm">
       <div className="whitespace-pre-wrap">{entry.content}</div>
-      <div className="text-sm text-gray-500">
+      <div className="text-xs sm:text-sm text-gray-500">
         {new Date(entry.date).toLocaleDateString()}
       </div>
 

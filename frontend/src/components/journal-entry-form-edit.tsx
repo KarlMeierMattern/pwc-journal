@@ -50,6 +50,7 @@ export const JournalEntryFormEdit = ({
         onChange={(e) => setContent(e.target.value)}
         rows={4}
         placeholder="Write your thoughts..."
+        className="text-xs sm:text-base"
       />
       {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
 

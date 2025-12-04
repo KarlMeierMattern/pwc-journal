@@ -52,7 +52,7 @@ export const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-stone-50 font-geist">
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-xs sm:max-w-sm">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>

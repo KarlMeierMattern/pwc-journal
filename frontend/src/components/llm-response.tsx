@@ -36,18 +36,18 @@ export const LLMResponse = ({
 
   if (!response) {
     return (
-      <div className="text-stone-600 text-sm text-center py-8 bg-stone-100/80">
+      <div className="text-stone-600 text-xs sm:text-sm text-center py-8 bg-stone-100/80">
         Click "Get summary" to analyse your journal entries.
       </div>
     );
   }
 
   if (isLoading) {
-    return <div className="text-gray-500 text-center py-8">Loading...</div>;
+    return <div className="text-gray-500 text-center py-8 text-xs sm:text-base">Loading...</div>;
   }
 
   return (
-    <div className="space-y-6 font-geist text-stone-600 bg-stone-100/80">
+    <div className="space-y-6 font-geist text-stone-600 bg-stone-100/80 text-xs sm:text-base">
       <div className="flex justify-end items-center space-x-2">
         <Copy
           className={`w-5 h-5 cursor-pointer transition ${
@@ -55,22 +55,22 @@ export const LLMResponse = ({
           }`}
           onClick={handleCopyAll}
         />
-        {copied && <span className="text-sm text-stone-400">Copied!</span>}
+        {copied && <span className="text-xs sm:text-sm text-stone-400">Copied!</span>}
       </div>
       <div>
-        <h3 className="text-lg font-semibold text-stone-800 mb-2">Summary</h3>
+        <h3 className="text-base sm:text-lg font-semibold text-stone-800 mb-2">Summary</h3>
         <p className="text-gray-700 leading-relaxed">{response.summary}</p>
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-stone-800 mb-2">
+        <h3 className="text-base sm:text-lg font-semibold text-stone-800 mb-2">
           Key Themes
         </h3>
         <div className="flex flex-wrap gap-2">
           {response.keyThemes.map((theme, index) => (
             <span
               key={index}
-              className="bg-custom-orange-dark text-white px-3 py-1 rounded-full text-sm"
+              className="bg-custom-orange-dark text-white px-3 py-1 rounded-full text-xs sm:text-sm"
             >
               {theme}
             </span>
@@ -79,7 +79,7 @@ export const LLMResponse = ({
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-stone-800 mb-2">Insights</h3>
+        <h3 className="text-base sm:text-lg font-semibold text-stone-800 mb-2">Insights</h3>
         <ul className="space-y-2">
           {response.insights.map((insight, index) => (
             <li key={index} className="text-gray-700 flex items-start">
@@ -91,7 +91,7 @@ export const LLMResponse = ({
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-stone-800 mb-2">
+        <h3 className="text-base sm:text-lg font-semibold text-stone-800 mb-2">
           PwC Evolved Professional Framework
         </h3>
         <ul className="space-y-3">
@@ -104,7 +104,7 @@ export const LLMResponse = ({
         </ul>
       </div>
 
-      <div className="text-sm text-stone-500 border-t pt-4">
+      <div className="text-xs sm:text-sm text-stone-500 border-t pt-4">
         <p>
           Analysed {response.entryCount} entries from {response.dateRange.from}{" "}
           to {response.dateRange.to}

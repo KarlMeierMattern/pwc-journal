@@ -43,12 +43,12 @@ export const JournalEntryList = ({
   };
 
   if (isLoading) {
-    return <div className="text-center py-8">Loading entries...</div>;
+    return <div className="text-center py-8 text-xs sm:text-base">Loading entries...</div>;
   }
 
   if (error) {
     return (
-      <div className="text-center py-8 text-red-500">
+      <div className="text-center py-8 text-red-500 text-xs sm:text-base">
         Failed to load entries
       </div>
     );
@@ -56,7 +56,7 @@ export const JournalEntryList = ({
 
   if (!entries || entries.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
+      <div className="text-center py-8 text-gray-500 text-xs sm:text-base">
         No journal entries yet. Start writing!
       </div>
     );

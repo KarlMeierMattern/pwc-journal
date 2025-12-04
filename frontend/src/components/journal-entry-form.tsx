@@ -49,7 +49,7 @@ export const JournalEntryForm = ({
           {...register("content")}
           placeholder="Write your thoughts..."
           rows={4}
-          className="bg-stone-50"
+          className="bg-stone-50 text-xs sm:text-base"
         />
         {errors.content && (
           <p className="text-sm text-red-500 mt-1">{errors.content.message}</p>
