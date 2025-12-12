@@ -31,19 +31,24 @@ export const JournalEntryList = ({
   };
 
   // Updated handleSave to include date
-  const handleSave = (content: string, date: string) => {
-    if (editingEntry) {
-      updateMutation.mutate(
-        { id: editingEntry.id.toString(), content, date },
-        {
-          onSuccess: () => setEditingEntry(null),
-        }
-      );
+  const handleSave = async (content: string, date: string) => {
+    if (!editingEntry) {
+      throw new Error("No entry being edited");
     }
+    await updateMutation.mutateAsync({
+      id: editingEntry.id.toString(),
+      content,
+      date,
+    });
+    setEditingEntry(null);
   };
 
   if (isLoading) {
-    return <div className="text-center py-8 text-xs sm:text-base">Loading entries...</div>;
+    return (
+      <div className="text-center py-8 text-xs sm:text-base">
+        Loading entries...
+      </div>
+    );
   }
 
   if (error) {

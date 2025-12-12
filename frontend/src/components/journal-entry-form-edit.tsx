@@ -9,12 +9,23 @@ export const JournalEntryFormEdit = ({
   onCancel,
 }: {
   entry?: { content: string; date: string };
-  onSave: (content: string, date: string) => void;
+  onSave: (content: string, date: string) => Promise<void>;
   onCancel?: () => void;
 }) => {
+  const formatDateForInput = (dateStr: string): string => {
+    if (!dateStr) return new Date().toISOString().split("T")[0];
+    // If it's already in YYYY-MM-DD format, return as is
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+    // Otherwise, parse and format
+    const date = new Date(dateStr);
+    return date.toISOString().split("T")[0];
+  };
+
   const [content, setContent] = useState(entry?.content || "");
   const [date, setDate] = useState(
-    entry?.date || new Date().toISOString().split("T")[0]
+    entry?.date
+      ? formatDateForInput(entry.date)
+      : new Date().toISOString().split("T")[0]
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,11 +33,11 @@ export const JournalEntryFormEdit = ({
   useEffect(() => {
     if (entry) {
       setContent(entry.content);
-      setDate(entry.date);
+      setDate(formatDateForInput(entry.date));
     }
   }, [entry]);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     if (content.trim().length === 0) {
@@ -37,10 +48,16 @@ export const JournalEntryFormEdit = ({
       setError("Date is required");
       return;
     }
+
     setIsSubmitting(true);
-    Promise.resolve(onSave(content.trim(), date)).finally(() => {
+    try {
+      await onSave(content.trim(), date);
+
+      // If successful, component will unmount when parent clears editingEntry
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to update entry");
       setIsSubmitting(false);
-    });
+    }
   };
 
   return (
