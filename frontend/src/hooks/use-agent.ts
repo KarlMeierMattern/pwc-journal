@@ -31,6 +31,7 @@ export const useAgent = () => {
     mutationFn: async (params?: {
       from?: string;
       to?: string;
+      customPrompt?: string;
     }): Promise<JournalSummary> => {
       const searchParams = new URLSearchParams();
       if (params?.from) searchParams.append("from", params.from);
@@ -44,6 +45,9 @@ export const useAgent = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            customPrompt: params?.customPrompt,
+          }),
         }
       );
       if (!response.ok) {
