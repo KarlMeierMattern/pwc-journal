@@ -185,7 +185,7 @@ export const useUpdateGrade = () => {
       }
       return response.json();
     },
-    onSuccess: (response, variables) => {
+    onSuccess: (_response, variables) => {
       // Update the user in cache
       queryClient.setQueryData<User>(["auth", "current-user"], (old) => {
         if (!old) return old;
