@@ -122,3 +122,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes pulse-bg-visible {
+  0%,
+  100% {
+    background-color: rgb(87 83 78 / 0.8);
+  }
+  50% {
+    background-color: rgb(68 64 60 / 1);
+  }
+}

@@ -64,9 +64,9 @@ export const JournalEntryFormEdit = ({
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        rows={4}
-        placeholder="Write your thoughts..."
-        className="text-xs sm:text-base"
+        rows={5}
+        placeholder="e.g., Worked on Project X today. Completed the initial design phase and had a productive meeting with the team. Feeling accomplished but also a bit tired from the long hours. Thinking about how to improve the workflow for next week."
+        className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-stone-500 text-sm text-stone-700 bg-white resize-y placeholder:text-stone-400"
       />
       {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
 

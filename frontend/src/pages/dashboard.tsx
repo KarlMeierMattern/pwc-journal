@@ -130,7 +130,7 @@ export const Dashboard = () => {
             onChange={(e) => setCustomPrompt(e.target.value)}
             placeholder="e.g., Summarise my entries relating to Project X"
             className="w-full px-3 py-2 border border-stone-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-stone-500 text-sm text-stone-700 bg-white resize-y min-h-[80px]"
-            rows={3}
+            rows={4}
           />
           <p className="mt-1 text-xs text-stone-500">
             Add specific instructions to focus the analysis on particular topics
@@ -138,8 +138,10 @@ export const Dashboard = () => {
           </p>
         </div>
         <Button
-          className={`w-full max-4-2xl mb-4 text-stone-100 font-normal px-4 py-2 bg-stone-600/80 border-none shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-300 cursor-pointer text-xs sm:text-base ${
-            isLoading ? "animate-pulse" : ""
+          className={`w-full max-4-2xl mb-4 text-stone-100 font-normal px-4 py-2 border-none shadow-stone-400 shadow-md hover:bg-stone-400 rounded-md transition-colors duration-300 cursor-pointer text-xs sm:text-base bg-stone-600/80 ${
+            isLoading
+              ? "animate-[pulse-bg-visible_1.5s_ease-in-out_infinite]"
+              : ""
           }`}
           disabled={isLoading}
           onClick={() => handleResponse()}
