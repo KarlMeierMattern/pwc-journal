@@ -10,10 +10,12 @@ import { professionalFrameworkData } from "./professional-framework-data";
 import { professionalFramework } from "./tables";
 
 export const seedProfessionalFramework = async () => {
-  console.log("✅ DB host set", process.env.DB_HOST);
-  console.log("✅ DB port set", process.env.DB_PORT);
-  console.log("✅ DB host", process.env.DB_USER);
-  console.log("✅ DB name", process.env.DB_NAME);
+  console.log("🔍 Environment check:");
+  console.log("  DB_URL:", process.env.DB_URL ? "✅ Set" : "❌ Missing");
+  console.log("  DB_HOST:", process.env.DB_HOST || "N/A");
+  console.log("  DB_PORT:", process.env.DB_PORT || "N/A");
+  console.log("  DB_USER:", process.env.DB_USER || "N/A");
+  console.log("  DB_NAME:", process.env.DB_NAME || "N/A");
 
   try {
     const rows = professionalFrameworkData.map((item) => ({
@@ -23,15 +25,34 @@ export const seedProfessionalFramework = async () => {
       behaviours: item.behaviours!,
     }));
 
+    console.log(`\n📊 Preparing to seed ${rows.length} framework entries...`);
+
+    // Check current count
+    const beforeCount = await db.select().from(professionalFramework);
+    console.log(`  Current entries in DB: ${beforeCount.length}`);
+
+    // Clear and insert
     await db.delete(professionalFramework).execute();
-    console.log("✅ Successfully delete DB table");
+    console.log("✅ Cleared existing entries");
+
     await db.insert(professionalFramework).values(rows);
-    console.log("✅ Successfully inserted professional framework data");
+    console.log(`✅ Successfully inserted ${rows.length} framework entries`);
+
+    // Verify insertion
+    const afterCount = await db.select().from(professionalFramework);
+    console.log(`✅ Verification: ${afterCount.length} entries now in DB`);
+
+    if (afterCount.length !== rows.length) {
+      console.warn(
+        `⚠️  WARNING: Expected ${rows.length} entries, found ${afterCount.length}`
+      );
+    }
   } catch (error) {
     console.error(
       "❌ Unsuccessful db insertion of professional framework data",
       error
     );
+    throw error;
   }
 };
 
