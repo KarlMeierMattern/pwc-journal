@@ -16,6 +16,7 @@ export const users = mysqlTable(
     id: serial("id").primaryKey(),
     email: varchar({ length: 255 }).notNull().unique(),
     passwordHash: varchar({ length: 255 }).notNull(),
+    grade: varchar({ length: 100 }),
     createdAt: timestamp().defaultNow().notNull(),
     updatedAt: timestamp().defaultNow().onUpdateNow().notNull(),
   },
@@ -59,10 +60,11 @@ export const professionalFramework = mysqlTable("professional_framework", {
   behaviours: text().notNull(),
 });
 
-// export const professionalGradeExpectations = mysqlTable(
-//   "professional_grade_expectations",
-//   {}
-// );
+export const gradeExpectations = mysqlTable("grade_expectations", {
+  id: serial("id").primaryKey(),
+  grade: varchar({ length: 100 }).notNull().unique(),
+  expectation: text().notNull(), // JSON string of expectation object
+});
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -72,3 +74,6 @@ export type NewJournalEntry = typeof journalEntries.$inferInsert;
 
 export type LLMCache = typeof llmCache.$inferSelect;
 export type NewLLMCache = typeof llmCache.$inferInsert;
+
+export type GradeExpectation = typeof gradeExpectations.$inferSelect;
+export type NewGradeExpectation = typeof gradeExpectations.$inferInsert;

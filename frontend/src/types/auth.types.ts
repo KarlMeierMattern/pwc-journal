@@ -1,6 +1,7 @@
 export type User = {
   id: number;
   email: string;
+  grade?: string | null;
 };
 
 export type LoginRequest = {
@@ -17,6 +18,7 @@ export type AuthResponse = {
   user: {
     id: number;
     email: string;
+    grade?: string | null;
   };
   message: string;
 };

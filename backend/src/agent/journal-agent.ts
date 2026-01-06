@@ -1,7 +1,11 @@
 import { Agent } from "@openai/agents";
 import { z } from "zod";
 import { professionalGradeExpectationsPrompt } from "./professional-grade-expectations.js";
-import { journalAgentTool, professionalFrameworkTool } from "./tools.js";
+import {
+  journalAgentTool,
+  professionalFrameworkTool,
+  gradeExpectationsTool,
+} from "./tools.js";
 
 const journalAgentSchema = z.object({
   summary: z
@@ -57,6 +61,6 @@ export const journalAgent = new Agent({
   instructions: professionalGradeExpectationsPrompt,
   outputType: journalAgentSchema,
   modelSettings: { toolChoice: "required" },
-  tools: [professionalFrameworkTool, journalAgentTool],
+  tools: [professionalFrameworkTool, gradeExpectationsTool, journalAgentTool],
   model: process.env.OPENAI_MODEL,
 });

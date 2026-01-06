@@ -4,6 +4,7 @@ import {
   login,
   logout,
   getMe,
+  updateGrade,
 } from "../controllers/auth-controller.js";
 import { authMiddleware } from "../middleware/auth-middleware.js";
 
@@ -13,5 +14,6 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/me", authMiddleware, getMe);
+router.patch("/grade", authMiddleware, updateGrade);
 
 export default router;

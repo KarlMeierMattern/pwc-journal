@@ -103,3 +103,7 @@ export const lastMonthEntries = async (userId: number) => {
     )
     .orderBy(desc(journalEntries.date));
 };
+
+export const updateUserGrade = async (userId: number, grade: string) => {
+  return await db.update(users).set({ grade }).where(eq(users.id, userId));
+};

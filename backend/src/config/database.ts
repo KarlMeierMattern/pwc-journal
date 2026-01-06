@@ -5,6 +5,7 @@ import {
   journalEntries,
   llmCache,
   professionalFramework,
+  gradeExpectations,
 } from "../db/schema/tables.js";
 import dotenv from "dotenv";
 
@@ -19,7 +20,13 @@ const pool = mysql.createPool({
 
 // drizzle instance
 export const db = drizzle(pool, {
-  schema: { users, journalEntries, llmCache, professionalFramework },
+  schema: {
+    users,
+    journalEntries,
+    llmCache,
+    professionalFramework,
+    gradeExpectations,
+  },
   mode: "default",
 });
 

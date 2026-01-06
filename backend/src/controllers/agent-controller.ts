@@ -3,6 +3,7 @@ import { NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { run } from "@openai/agents";
 import { journalAgent, JournalAgentOutput } from "../agent/journal-agent.js";
+import { findByUserId } from "../db/queries.js";
 
 export const getJournalSummary = async (
   req: Request<{}, {}, {}, { from?: string; to?: string }>,
@@ -17,9 +18,16 @@ export const getJournalSummary = async (
     const { userId } = req.user;
     const { from, to } = req.query;
 
+    // Fetch user's grade
+    const [user] = await findByUserId(userId);
+    const userGrade = user?.grade || null;
+
     const dateRange =
       from && to ? `from ${from} to ${to}` : "for all available dates";
-    const input = `Please analyze journal entries for userId: ${userId} ${dateRange} and provide a comprehensive summary. Use the getJournalEntries tool with userId: ${userId}${
+    const gradeContext = userGrade
+      ? ` The user's current grade is: ${userGrade}.`
+      : " The user has not set their grade yet.";
+    const input = `Please analyze journal entries for userId: ${userId} ${dateRange} and provide a comprehensive summary.${gradeContext} Use the getJournalEntries tool with userId: ${userId}${
       from ? `, from: "${from}"` : ""
     }${to ? `, to: "${to}"` : ""}.`;
 

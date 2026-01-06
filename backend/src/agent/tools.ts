@@ -1,7 +1,11 @@
 import { tool } from "@openai/agents";
 import { z } from "zod";
 import { db } from "../config/database.js";
-import { journalEntries, professionalFramework } from "../db/schema/tables.js";
+import {
+  journalEntries,
+  professionalFramework,
+  gradeExpectations,
+} from "../db/schema/tables.js";
 import { and, eq, gte, lte, asc } from "drizzle-orm";
 
 export const journalAgentTool = tool({
@@ -63,5 +67,44 @@ export const professionalFrameworkTool = tool({
     }
 
     return entries;
+  },
+});
+
+export const gradeExpectationsTool = tool({
+  name: "getGradeExpectations",
+  description:
+    "Get all grade expectations from the database. Returns expectations for all grades (associate, senior associate, manager level 1-4, senior manager) to enable comparison and evaluation against user's current grade.",
+  parameters: z.object({}),
+  strict: true,
+  execute: async () => {
+    console.log(
+      "[gradeExpectationsTool] Fetching grade expectations from DB..."
+    );
+    const entries = await db
+      .select()
+      .from(gradeExpectations)
+      .orderBy(asc(gradeExpectations.id));
+
+    // Parse JSON expectations
+    const parsedEntries = entries.map((entry) => ({
+      ...entry,
+      expectation: JSON.parse(entry.expectation),
+    }));
+
+    console.log(
+      `[gradeExpectationsTool] Found ${parsedEntries.length} grade expectation entries`
+    );
+    if (parsedEntries.length === 0) {
+      console.warn(
+        "[gradeExpectationsTool] ⚠️ WARNING: Grade expectations table is empty!"
+      );
+    } else {
+      console.log(
+        "[gradeExpectationsTool] Sample entry:",
+        parsedEntries[0].grade
+      );
+    }
+
+    return parsedEntries;
   },
 });

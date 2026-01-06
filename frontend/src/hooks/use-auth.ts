@@ -154,3 +154,44 @@ export const useLogout = () => {
     },
   });
 };
+
+export const useUpdateGrade = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    { message: string; grade: string },
+    Error,
+    { grade: string }
+  >({
+    mutationFn: async (data: { grade: string }) => {
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/grade`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        let error;
+        try {
+          error = await response.json();
+        } catch {
+          error = {
+            message: `HTTP ${response.status}: ${response.statusText}`,
+          };
+        }
+        throw error;
+      }
+      return response.json();
+    },
+    onSuccess: (response, variables) => {
+      // Update the user in cache
+      queryClient.setQueryData<User>(["auth", "current-user"], (old) => {
+        if (!old) return old;
+        return { ...old, grade: variables.grade };
+      });
+      queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
+    },
+  });
+};

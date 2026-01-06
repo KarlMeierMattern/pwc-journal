@@ -3,7 +3,12 @@ import { NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 import { hashPassword, comparePassword } from "../utils/password.js";
 import { generateToken } from "../utils/jwt.js";
-import { findUserByEmail, createUser, findByUserId } from "../db/queries.js";
+import {
+  findUserByEmail,
+  createUser,
+  findByUserId,
+  updateUserGrade,
+} from "../db/queries.js";
 
 export const signup = async (
   req: Request,
@@ -151,7 +156,10 @@ export const logout = async (
 
 export const getMe = async (
   req: Request,
-  res: Response<{ user: { id: number; email: string } } | { message: string }>,
+  res: Response<
+    | { user: { id: number; email: string; grade?: string | null } }
+    | { message: string }
+  >,
   next: NextFunction
 ) => {
   try {
@@ -166,7 +174,51 @@ export const getMe = async (
       user: {
         id: user.id,
         email: user.email,
+        grade: user.grade,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateGrade = async (
+  req: Request<{}, {}, { grade: string }>,
+  res: Response<{ message: string; grade: string } | { message: string }>,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.user;
+    const { grade } = req.body;
+
+    if (!grade) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Grade is required" });
+    }
+
+    // Validate grade is one of the allowed values
+    const validGrades = [
+      "Associate",
+      "Senior Associate",
+      "Manager Level 1",
+      "Manager Level 2",
+      "Manager Level 3",
+      "Manager Level 4",
+      "Senior Manager",
+    ];
+
+    if (!validGrades.includes(grade)) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Invalid grade" });
+    }
+
+    await updateUserGrade(userId, grade);
+
+    res.status(StatusCodes.OK).json({
+      message: "Grade updated successfully",
+      grade,
     });
   } catch (error) {
     next(error);
