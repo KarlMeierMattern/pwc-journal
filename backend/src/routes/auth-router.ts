@@ -10,6 +10,14 @@ import { authMiddleware } from "../middleware/auth-middleware.js";
 
 const router = express.Router();
 
+// Log all requests to auth routes
+// router.use((req, res, next) => {
+//   console.log(`[auth-router] ===== ${req.method} ${req.path} =====`);
+//   console.log(`[auth-router] Request body:`, JSON.stringify(req.body, null, 2));
+//   console.log(`[auth-router] Request query:`, req.query);
+//   next();
+// });
+
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);

@@ -29,7 +29,10 @@ export const Signup = () => {
     formState: { errors },
     reset,
     setError,
+    watch,
   } = useForm<SignUpSchema>({ resolver: zodResolver(signUpSchema) });
+
+  const gradeValue = watch("grade");
 
   const signupMutation = useSignup();
 
@@ -38,6 +41,7 @@ export const Signup = () => {
       {
         email: data.email,
         password: data.password,
+        grade: data.grade || undefined,
       },
       {
         onSuccess: () => {
@@ -118,6 +122,28 @@ export const Signup = () => {
             {errors.confirmPassword && (
               <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
                 {errors.confirmPassword.message as string}
+              </p>
+            )}
+
+            <select
+              disabled={signupMutation.isPending}
+              {...register("grade")}
+              className={`px-6 py-2 text-sm rounded-lg bg-white bg-opacity-80 focus:outline-none border-1 border-gray-300 ${
+                !gradeValue ? "text-gray-400" : "text-gray-700"
+              }`}
+            >
+              <option value="">Select grade...</option>
+              <option value="Associate">Associate</option>
+              <option value="Senior Associate">Senior Associate</option>
+              <option value="Manager Level 1">Manager Level 1</option>
+              <option value="Manager Level 2">Manager Level 2</option>
+              <option value="Manager Level 3">Manager Level 3</option>
+              <option value="Manager Level 4">Manager Level 4</option>
+              <option value="Senior Manager">Senior Manager</option>
+            </select>
+            {errors.grade && (
+              <p className="text-red-500 bg-red-200 rounded-md px-4 py-2">
+                {errors.grade.message as string}
               </p>
             )}
 

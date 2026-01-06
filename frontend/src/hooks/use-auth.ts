@@ -79,8 +79,7 @@ export const useSignup = () => {
       return response.json();
     },
     onSuccess: (response: AuthResponse) => {
-      queryClient.setQueryData(["auth", "current-user"], response.user);
-      queryClient.invalidateQueries({ queryKey: ["auth", "current-user"] });
+      queryClient.setQueryData<User>(["auth", "current-user"], response.user);
     },
     onError: () => {
       queryClient.removeQueries({ queryKey: ["auth", "current-user"] });
