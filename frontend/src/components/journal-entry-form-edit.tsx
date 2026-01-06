@@ -52,7 +52,6 @@ export const JournalEntryFormEdit = ({
     setIsSubmitting(true);
     try {
       await onSave(content.trim(), date);
-
       // If successful, component will unmount when parent clears editingEntry
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update entry");

@@ -43,10 +43,24 @@ export const professionalFrameworkTool = tool({
   parameters: z.object({}),
   strict: true,
   execute: async () => {
+    console.log(
+      "[professionalFrameworkTool] Fetching framework data from DB..."
+    );
     const entries = await db
       .select()
       .from(professionalFramework)
       .orderBy(asc(professionalFramework.id));
+
+    console.log(
+      `[professionalFrameworkTool] Found ${entries.length} framework entries`
+    );
+    if (entries.length === 0) {
+      console.warn(
+        "[professionalFrameworkTool] ⚠️ WARNING: Framework table is empty!"
+      );
+    } else {
+      console.log("[professionalFrameworkTool] Sample entry:", entries[0]);
+    }
 
     return entries;
   },
