@@ -1,4 +1,4 @@
-import { useAuthContext, useAuthManager } from "../context/auth-context";
+import { useAuthContext, useAuthManager } from "@/auth/auth";
 import { useLogout } from "../hooks/use-auth";
 import { useNavigate } from "react-router-dom";
 import { JournalEntryForm } from "@/components/journal-entry-form";

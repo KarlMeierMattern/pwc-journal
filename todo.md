@@ -1,5 +1,29 @@
 # 📋 Development Todo List
 
+## Easy wins
+
+- [❌] change colour scheme and style to pwc
+- [❌] update placeholder text to guide user to fill out their daily journal (i.e. "what did you do today?", "what are you thinking about?", "what are you feeling?").
+- [❌] show some examples of journal entries (allow user to select button to view examples).
+- [❌] add mood buttons below the text area when selected there is a conversion that gets added to the journal entry
+- [❌] allow user to enter their manager level and edit it
+
+## Medium wins
+
+- [❌] Add refresh tokens to JWT for longer sessions
+- [❌] allow users to backdate journal entries / mass import
+- [❌] align the output to the pwc professional framework
+- [❌] create database of pwc professional framework as well as the different manager levels and their responsibilities
+- [❌] have prompt summary output options (i.e. general summary, prepare for CRT performance evaluation, etc.)
+- [❌] output to email / pdf
+- [❌] give option to change perspective ("i", 3rd person etc.)
+- [❌] ability to edit output summary and update
+- [❌] allow user to add more context to the summary (and then regenerate summary)
+- [❌] break out key themes into an exec summary with short description of each.
+- [❌] emaill scheduling when missing daily update
+- [❌] add "rewrite with AI button" on individual journal entries
+- [❌] allow user to enter their goals
+
 ## Phase 1: Database & Environment Setup
 
 ### Step 1.1: Database Schema Setup
@@ -59,10 +83,9 @@
 ### Step 2.3: Auth UI Components
 
 - [✅] Create button component: `button input form label card`
-- [❌] Create form component: `form input label card`
 - [✅] Create `frontend/src/pages/login.tsx` - Login page
 - [✅] Create `frontend/src/pages/signup.tsx` - Signup page
-- [❌] Test login/signup flow end-to-end
+- [✅] Test login/signup flow end-to-end
 
 ### Step 2.4: Protected Route Setup
 
@@ -78,13 +101,11 @@
 
 - [✅] Create `backend/src/routes/journal.ts` - Journal CRUD routes
 - [✅] Create `backend/src/controllers/journal-controller.ts` - Journal logic
-- [❌] Create `backend/src/utils/validation.ts` - Validation schemas
 - [✅] Implement `POST /api/v1/journal` - Create entry
 - [✅] Implement `GET /api/v1/journal` - List entries with basic filters (date, limit, page)
 - [✅] Implement `GET /api/v1/journal/:id` - Get single entry
 - [✅] Implement `PUT /api/v1/journal/:id` - Update entry
 - [✅] Implement `DELETE /api/v1/journal/:id` - Delete entry
-- [❌] Implement `GET /api/v1/journal` - List entries with advanced filters (text search, date range)
 - [✅] Test all journal endpoints with Postman
 
 ### Step 3.2: Frontend Journal Data Layer
@@ -122,16 +143,6 @@
 - [✅] Create `backend/src/controllers/agent-controller.ts` - Summary logic
 - [✅] Test agent can query journal entries by date range
 
-### Step 4.3: Summary UI Components
-
-- [❌] Create `frontend/src/components/insights/summary-card.tsx`
-- [❌] Create `frontend/src/components/insights/summary-generator.tsx`
-- [❌] Create `frontend/src/components/insights/insights-dashboard.tsx`
-- [❌] Create `frontend/src/hooks/use-summaries.ts` - Summary hooks
-- [❌] Implement `POST /api/v1/summaries/generate` route
-- [❌] Implement `GET /api/v1/summaries` route
-- [❌] Test LLM summary generation end-to-end
-
 ---
 
 ## Phase 5: UI/UX Enhancements
@@ -142,33 +153,15 @@
 - [✅] Create `frontend/src/components/analytics/github-chart.tsx`
 - [✅] Test GitHub chart shows daily journal activity
 
-### Step 5.3: Dashboard Layout Improvements
-
-- [❌] Create `frontend/src/components/dashboard/dashboard-header.tsx`
-- [❌] Create `frontend/src/components/dashboard/quick-stats.tsx`
-- [❌] Create `frontend/src/components/dashboard/recent-entries.tsx`
-- [❌] Test complete dashboard layout and responsiveness
-
 ---
 
 ## Phase 6: Security & Production Hardening
 
-### Step 6.1: CSRF Protection
+### Step 6.1: Rate limiting
 
-- [❌] Install CSRF dependencies: `csurf express-rate-limit`
-- [❌] Create `backend/src/middleware/csrf-middleware.ts` - CSRF token generation/validation
-- [❌] Create `backend/src/middleware/rate-limit.ts` - Rate limiting for auth endpoints
-- [❌] Update `backend/src/routes/journal-router.ts` - Add CSRF protection to state-changing routes
-- [❌] Update `backend/src/routes/auth-router.ts` - Add CSRF protection to logout
-- [❌] Update `frontend/src/hooks/use-journal.ts` - Include CSRF tokens in requests
-- [❌] Update `frontend/src/hooks/use-auth.ts` - Handle CSRF token storage
-- [❌] Test CSRF protection prevents cross-site attacks
-
-### Step 6.2: JWT Security Hardening
-
-- [❌] Update `backend/src/utils/jwt.ts` - Add issuer, audience, better validation
-- [❌] Update `backend/src/middleware/auth-middleware.ts` - Better error handling
-- [❌] Test JWT security improvements
+- [✅] Install rate limit dependencies: `express-rate-limit`
+- [✅] Create `backend/src/index.ts` - Rate limiting for all routes, auth routes, and agent routes
+- [✅] Test rate limiting works
 
 ---
 
@@ -176,53 +169,11 @@
 
 ### Production Environment
 
-- [❌] Set up MySQL database on VPS (production only)
-- [❌] Set up Redis on VPS (or use Upstash for both dev/prod)
-- [❌] Configure environment variables in Coolify
-- [❌] Test backend deployment with database connections
-- [❌] Test frontend deployment with API integration
-- [❌] Configure SSL certificates via Let's Encrypt
-- [❌] Test complete production deployment
-
-### Testing & Quality Assurance
-
-- [❌] Set up React Query DevTools
-- [❌] Implement error boundaries for auth components
-- [❌] Implement error boundaries for journal components
-- [❌] Add loading states for all async operations
-- [❌] Test all error scenarios (network failures, auth failures)
-- [❌] Verify TypeScript strict mode compliance
+- [✅] Set up MySQL database on VPS (production only)
+- [✅] Configure environment variables in Coolify
+- [✅] Test backend deployment with database connections
+- [✅] Test frontend deployment with API integration
+- [✅] Configure SSL certificates via Let's Encrypt
+- [✅] Test complete production deployment
 
 ---
-
-## Completed
-
-- [✅] Frontend setup (React + Vite + Tailwind + React Router)
-- [✅] Backend Express server with base routing
-- [✅] CORS configuration for development and production
-- [✅] Environment variable setup for dev/prod
-- [✅] Initial deployment to Hetzner VPS via Coolify
-
-## Easy wins
-
-- [❌] change colour scheme and style to pwc
-- [❌] update placeholder text to guide user to fill out their daily journal (i.e. "what did you do today?", "what are you thinking about?", "what are you feeling?").
-- [❌] show some examples of journal entries (allow user to select button to view examples).
-- [❌] add mood buttons below the text area when selected there is a conversion that gets added to the journal entry
-- [❌] allow user to enter their manager level and edit it
-
-## Medium wins
-
-- [❌] Add refresh tokens to JWT for longer sessions
-- [❌] allow users to backdate journal entries / mass import
-- [❌] align the output to the pwc professional framework
-- [❌] create database of pwc professional framework as well as the different manager levels and their responsibilities
-- [❌] have prompt summary output options (i.e. general summary, prepare for CRT performance evaluation, etc.)
-- [❌] output to email / pdf
-- [❌] give option to change perspective ("i", 3rd person etc.)
-- [❌] ability to edit output summary and update
-- [❌] allow user to add more context to the summary (and then regenerate summary)
-- [❌] break out key themes into an exec summary with short description of each.
-- [❌] emaill scheduling when missing daily update
-- [❌] add "rewrite with AI button" on individual journal entries
-- [❌] allow user to enter their goals

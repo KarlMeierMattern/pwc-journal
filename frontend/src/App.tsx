@@ -2,9 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import { Signup } from "./pages/signup";
 import { Login } from "./pages/login";
 import { Dashboard } from "./pages/dashboard";
-import { ProtectedRoute } from "@/components/protected-route";
+import { ProtectedRoute, RootRedirect } from "@/components/protected-route";
 import { AuthGuard } from "@/components/auth-guard";
-import { RootRedirect } from "@/components/root-redirect";
 import { AllEntries } from "./pages/all-entries";
 
 const App = () => {

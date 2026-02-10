@@ -27,7 +27,7 @@ export const useCurrentUser = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch current user");
         }
-        const data: { user: User } = await response.json();
+        const data: { user: User } = await response.json(); // the resulting object must have a property named user, and the value of that property must match the structure of the User
         return data.user;
       } catch (error) {
         console.error("Error fetching current user:", error);

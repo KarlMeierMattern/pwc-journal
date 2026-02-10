@@ -2,7 +2,7 @@
 // Doesn't block routes - Just shows loading spinner while checking auth
 // Runs once when app starts
 
-import { useAuthContext } from "@/context/auth-context";
+import { useAuthContext } from "@/auth/auth";
 
 type AuthGuardProps = {
   children: React.ReactNode;
