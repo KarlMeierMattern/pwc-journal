@@ -41,6 +41,7 @@ export const Signup = () => {
       {
         email: data.email,
         password: data.password,
+        confirmPassword: data.confirmPassword,
         grade: data.grade || undefined,
       },
       {

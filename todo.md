@@ -103,12 +103,11 @@
 - [✅] Create `frontend/src/components/journal/journal-entry-card.tsx`
 - [✅] Create `frontend/src/components/journal/journal-entry-form.tsx`
 - [✅] Create `frontend/src/components/journal/journal-entry-list.tsx`
-- [❌] Create `frontend/src/components/journal/entry-filters.tsx` - Date filters only
+- [✅] Create `frontend/src/components/journal/entry-filters.tsx` - Date filters only
 
 ### Step 3.4: Journal Pages
 
 - [✅] Create `frontend/src/pages/dashboard.tsx` - Main dashboard
-- [❌] Create `frontend/src/components/layout/sidebar.tsx` - Navigation
 - [✅] Test complete journal CRUD flow in browser
 
 ---
@@ -119,17 +118,9 @@
 
 - [✅] Install OpenAI: `npm install openai`
 - [✅] Create `backend/src/agents/journal-agent.ts` - Agent with DB tool
-- [❌] Create `backend/src/routes/summaries.ts` - Summary routes
-- [❌] Create `backend/src/controllers/summary-controller.ts` - Summary logic
-- [❌] Test agent can query journal entries by date range
-
-### Step 4.2: Redis Caching Layer
-
-- [❌] Create `backend/src/utils/cache.ts` - Redis utilities
-- [❌] Create `backend/src/services/cache-service.ts` - Caching logic
-- [❌] Implement cache key format: `user:{userId}:summary:{fromDate}-{toDate}`
-- [❌] Implement 7-day TTL for cached summaries
-- [❌] Implement "Refresh Summary" button for manual cache invalidation
+- [✅] Create `backend/src/routes/agent-router.ts` - Summary routes
+- [✅] Create `backend/src/controllers/agent-controller.ts` - Summary logic
+- [✅] Test agent can query journal entries by date range
 
 ### Step 4.3: Summary UI Components
 
@@ -147,19 +138,9 @@
 
 ### Step 5.1: GitHub-style Heatmap Calendar
 
-- [❌] Install heatmap dependencies: `react-calendar-heatmap date-fns`
-- [❌] Install types: `@types/react-calendar-heatmap`
-- [❌] Create `frontend/src/components/analytics/activity-heatmap.tsx`
-- [❌] Create `frontend/src/components/analytics/metrics-cards.tsx`
-- [❌] Create `frontend/src/hooks/use-analytics.ts` - Analytics hooks
-- [❌] Test heatmap shows daily journal activity
-
-### Step 5.2: Advanced Filtering & Search
-
-- [❌] Install shadcn components: `command dialog tabs`
-- [❌] Create `frontend/src/components/journal/advanced-filters.tsx` - Date/text search
-- [❌] Create `frontend/src/utils/search.ts` - Text-based search utilities
-- [❌] Test search and filtering functionality
+- [✅] Install heatmap dependencies: `react-calendar-heatmap date-fns`
+- [✅] Create `frontend/src/components/analytics/github-chart.tsx`
+- [✅] Test GitHub chart shows daily journal activity
 
 ### Step 5.3: Dashboard Layout Improvements
 
@@ -232,6 +213,7 @@
 
 ## Medium wins
 
+- [❌] Add refresh tokens to JWT for longer sessions
 - [❌] allow users to backdate journal entries / mass import
 - [❌] align the output to the pwc professional framework
 - [❌] create database of pwc professional framework as well as the different manager levels and their responsibilities

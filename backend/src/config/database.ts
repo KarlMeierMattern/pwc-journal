@@ -33,9 +33,8 @@ export const db = drizzle(pool, {
 // test db connection
 export const testConnection = async () => {
   try {
-    const [rows] = await pool.query("SELECT 1");
+    await pool.query("SELECT 1");
     console.log("✅ Database connected successfully");
-    return rows;
   } catch (error) {
     console.error("❌ Database connection failed:", error);
     throw error;
@@ -43,13 +42,16 @@ export const testConnection = async () => {
 };
 
 // keepalive ping
-setInterval(async () => {
-  try {
-    await pool.query("SELECT 1");
-  } catch (err) {
-    console.error("MySQL keepalive failed:", err);
-  }
-}, 1000 * 60 * 5);
+setInterval(
+  async () => {
+    try {
+      await pool.query("SELECT 1");
+    } catch (err) {
+      console.error("MySQL keepalive failed:", err);
+    }
+  },
+  1000 * 60 * 5,
+);
 
 // const connection = await mysql.createConnection(process.env.DB_URL!);
 

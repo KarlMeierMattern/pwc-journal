@@ -6,19 +6,6 @@ import {
 } from "../db/schema/tables.js";
 import { eq, and, desc, gte, type SQL } from "drizzle-orm";
 
-// prod test
-(async () => {
-  try {
-    const result = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, "karlmeiermattern@gmail.com"));
-    console.log("Result:", result);
-  } catch (e) {
-    console.error("Query failed:", e);
-  }
-})();
-
 export const findUserByEmail = async (email: string) => {
   return await db.select().from(users).where(eq(users.email, email));
 };
@@ -26,7 +13,7 @@ export const findUserByEmail = async (email: string) => {
 export const createUser = async (
   email: string,
   hashedPassword: string,
-  grade?: string | null
+  grade?: string | null,
 ) => {
   return await db.insert(users).values({
     email,
@@ -58,8 +45,8 @@ export const findJournalById = async (id: string, userId: any) => {
     .where(
       and(
         eq(journalEntries.userId, userId),
-        eq(journalEntries.id, parseInt(id))
-      )
+        eq(journalEntries.id, parseInt(id)),
+      ),
     )
     .limit(1);
 };
@@ -68,7 +55,7 @@ export const updateJournalById = async (
   id: string,
   userId: number,
   content: string,
-  date: string // "YYYY-MM-DD"
+  date: string, // "YYYY-MM-DD"
 ) => {
   // Create a Date object at local midnight
   const formattedDate = new Date(date + "T00:00:00");
@@ -80,7 +67,7 @@ export const updateJournalById = async (
       date: formattedDate,
     })
     .where(
-      and(eq(journalEntries.userId, userId), eq(journalEntries.id, Number(id)))
+      and(eq(journalEntries.userId, userId), eq(journalEntries.id, Number(id))),
     );
 };
 
@@ -90,8 +77,8 @@ export const deleteJournal = async (id: string, userId: any) => {
     .where(
       and(
         eq(journalEntries.userId, userId),
-        eq(journalEntries.id, parseInt(id))
-      )
+        eq(journalEntries.id, parseInt(id)),
+      ),
     );
 };
 
@@ -106,8 +93,8 @@ export const lastMonthEntries = async (userId: number) => {
     .where(
       and(
         eq(journalEntries.userId, userId),
-        gte(journalEntries.date, thirtyDaysAgo)
-      )
+        gte(journalEntries.date, thirtyDaysAgo),
+      ),
     )
     .orderBy(desc(journalEntries.date));
 };

@@ -6,7 +6,7 @@ type AuthContextType = ReturnType<typeof useAuth>;
 
 // Create context with undefined default (will be provided by AuthProvider)
 export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
+  undefined,
 );
 
 // Custom hook to use auth context
@@ -22,6 +22,7 @@ export const AuthManagerContext = createContext<{
   resetAuth: () => void;
 } | null>(null);
 
+// Custom hook to use auth manager context
 export const useAuthManager = () => {
   const ctx = useContext(AuthManagerContext);
   if (!ctx) throw new Error("useAuthManager must be used within AuthProvider");

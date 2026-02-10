@@ -13,14 +13,9 @@ export const getJournalSummary = async (
     { from?: string; to?: string }
   >,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    console.log("🤖 Agent controller reached");
-    console.log("User:", req.user);
-    console.log("Query params:", req.query);
-    console.log("Request body:", req.body);
-
     const { userId } = req.user;
     const { from, to } = req.query;
     const { customPrompt } = req.body;

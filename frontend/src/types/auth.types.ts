@@ -12,6 +12,7 @@ export type LoginRequest = {
 export type SignupRequest = {
   email: string;
   password: string;
+  confirmPassword: string;
   grade?: string;
 };
 

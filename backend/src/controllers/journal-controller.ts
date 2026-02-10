@@ -15,21 +15,59 @@ import {
   deleteJournal,
   lastMonthEntries,
 } from "../db/queries.js";
+import { z } from "zod";
+
+const dateStringSchema = z
+  .string()
+  .min(1, "Date is required")
+  .refine(
+    (s) => {
+      const d = new Date(s);
+      return !Number.isNaN(d.getTime());
+    },
+    { message: "Invalid date" },
+  );
+
+const addJournalEntrySchema = z.object({
+  content: z.string().min(1, "Content is required"),
+  date: dateStringSchema,
+});
+
+const updateJournalEntrySchema = z.object({
+  content: z.string().min(1, "Content is required"),
+  date: dateStringSchema,
+});
+
+const journalQuerySchema = z.object({
+  from: dateStringSchema.optional(),
+  to: dateStringSchema.optional(),
+  limit: z.coerce.number().int().positive().optional(),
+  page: z.coerce.number().int().positive().optional(),
+});
+
+function validationErrorResponse(parsed: z.SafeParseError<unknown>) {
+  const fieldErrors = parsed.error.flatten().fieldErrors;
+  const message =
+    typeof fieldErrors === "object" && Object.keys(fieldErrors).length > 0
+      ? Object.values(fieldErrors).flat().join("; ") || "Validation failed"
+      : "Validation failed";
+  return { message };
+}
 
 export const addJournalEntry = async (
   req: Request<{}, {}, { content: string; date: string }, {}>,
   res: Response<{ message: string; newEntry?: NewJournalEntry }>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const { userId } = req.user;
-    const { content, date } = req.body;
-
-    if (!content || !date) {
+    const parsed = addJournalEntrySchema.safeParse(req.body);
+    if (!parsed.success) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .send({ message: "Content and date are required" });
+        .json(validationErrorResponse(parsed));
     }
+    const { userId } = req.user;
+    const { content, date } = parsed.data;
 
     const parsedDate = new Date(date);
     const formattedDate = parsedDate.toISOString().split("T")[0];
@@ -59,12 +97,17 @@ export const getJournalEntries = async (
     { from?: string; to?: string; limit?: string; page?: string }
   >,
   res: Response<JournalEntry[] | { message: string }>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
+    const parsed = journalQuerySchema.safeParse(req.query);
+    if (!parsed.success) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json(validationErrorResponse(parsed));
+    }
     const { userId } = req.user;
-
-    const { from, to } = req.query;
+    const { from, to } = parsed.data;
 
     const conditions = [eq(journalEntries.userId, userId)];
     if (from) {
@@ -88,7 +131,7 @@ export const getJournalEntries = async (
 export const getJournalEntryById = async (
   req: Request<{ id: string }, {}, {}, {}>,
   res: Response<JournalEntry | { message: string }>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { userId } = req.user;
@@ -111,20 +154,19 @@ export const getJournalEntryById = async (
 export const updateJournalEntry = async (
   req: Request<{ id: string }, {}, { content: string; date: string }, {}>,
   res: Response<{ message: string; entry: JournalEntry } | { message: string }>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    const { userId } = req.user;
-    const { id } = req.params;
-    const { content, date } = req.body;
-
-    if (!content) {
+    const parsed = updateJournalEntrySchema.safeParse(req.body);
+    if (!parsed.success) {
       return res
         .status(StatusCodes.BAD_REQUEST)
-        .json({ message: "Content is required" });
+        .json(validationErrorResponse(parsed));
     }
+    const { userId } = req.user;
+    const { id } = req.params;
+    const { content, date } = parsed.data;
 
-    // First check if entry exists
     const [existingEntry] = await findJournalById(id, userId);
 
     if (!existingEntry) {
@@ -150,7 +192,7 @@ export const updateJournalEntry = async (
 export const deleteJournalEntry = async (
   req: Request<{ id: string }, {}, {}, {}>,
   res: Response<{ message: string }>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { userId } = req.user;
@@ -177,7 +219,7 @@ export const deleteJournalEntry = async (
 export const getLastMonthEntries = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const entries = await lastMonthEntries(req.user.userId);
