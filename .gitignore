@@ -35,3 +35,6 @@ docker-compose.override.yml.bak.3
 notes.md
 todo.md
 reminders.md
+
+# Architecture
+ARCHITECTURE.md

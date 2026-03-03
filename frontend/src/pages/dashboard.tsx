@@ -5,13 +5,14 @@ import { JournalEntryForm } from "@/components/journal-entry-form";
 import { useCreateEntry } from "@/hooks/use-journal";
 import { Button } from "@/components/ui/button";
 import { LLMResponse } from "@/components/llm-response";
-import { useAgent, type JournalSummary } from "@/hooks/use-agent";
+import { useAgent } from "@/hooks/use-agent";
 import { JournalEntryFilters } from "@/components/journal-entry-filters";
 import { Settings } from "@/components/settings-modal";
 import { SettingsOverlay } from "@/components/settings-overlay";
 import { useState } from "react";
 import { GitHubChart } from "@/components/github-chart";
 import { useLastMonthEntries } from "@/hooks/use-journal";
+import type { JournalSummary } from "@/types/journalsummary.types";
 
 export const Dashboard = () => {
   const [fromDate, setFromDate] = useState<Date>();
