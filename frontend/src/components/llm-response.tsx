@@ -1,4 +1,4 @@
-import type { JournalSummary } from "@/hooks/use-agent";
+import type { JournalSummary } from "@/types/journalsummary.types";
 import { useState } from "react";
 import { Copy } from "lucide-react";
 
@@ -67,7 +67,7 @@ export const LLMResponse = ({
           Key Themes
         </h3>
         <div className="flex flex-wrap gap-2">
-          {response.keyThemes.map((theme, index) => (
+          {response.keyThemes.map((theme: string, index: number) => (
             <span
               key={index}
               className="bg-custom-orange-dark text-white px-3 py-1 rounded-full text-xs sm:text-sm"
@@ -81,7 +81,7 @@ export const LLMResponse = ({
       <div>
         <h3 className="text-base sm:text-lg font-semibold text-stone-800 mb-2">Insights</h3>
         <ul className="space-y-2">
-          {response.insights.map((insight, index) => (
+          {response.insights.map((insight: string, index: number) => (
             <li key={index} className="text-gray-700 flex items-start">
               <span className="text-black mr-2 mt-1">•</span>
               {insight}
@@ -98,7 +98,7 @@ export const LLMResponse = ({
           {Object.entries(response.framework).map(([key, value]) => (
             <li key={key}>
               <p className="font-medium text-stone-800 capitalize">{key}</p>
-              <p className="text-stone-700 mt-1">{value}</p>
+              <p className="text-stone-700 mt-1">{String(value)}</p>
             </li>
           ))}
         </ul>
