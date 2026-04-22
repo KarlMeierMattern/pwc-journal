@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
@@ -10,7 +10,9 @@ import agentRouter from "./routes/agent-router.js";
 import { testConnection } from "./config/database.js";
 dotenv.config();
 
-if (process.env.NODE_ENV !== "production") {
+const isProd = process.env.NODE_ENV === "production";
+
+if (!isProd) {
   console.log("Main app env check:");
   console.log("DB_HOST:", process.env.DB_HOST ? "Set" : "Missing");
   console.log("DB_PORT:", process.env.DB_PORT ? "Set" : "Missing");
@@ -26,16 +28,16 @@ if (process.env.NODE_ENV !== "production") {
 }
 testConnection();
 
+if (isProd && !process.env.FRONTEND_PROD_URL) {
+  throw new Error("FRONTEND_PROD_URL must be set in production");
+}
+
 export const app = express();
 const port = process.env.PORT || 3000;
 
-const allowedOrigins =
-  process.env.NODE_ENV === "production"
-    ? [process.env.FRONTEND_PROD_URL]
-    : ["http://localhost:5173"];
-
-console.log("NODE_ENV:", process.env.NODE_ENV);
-console.log("Allowed Origins:", allowedOrigins);
+const allowedOrigins: string[] = isProd
+  ? [process.env.FRONTEND_PROD_URL as string]
+  : ["http://localhost:5173"];
 
 app.set("trust proxy", 1); // trust the 1st proxy in front
 app.use(helmet());
@@ -53,11 +55,9 @@ app.use(
 app.use(
   cors({
     origin: (origin, callback) => {
-      console.log("Incoming request from origin:", origin);
-      if (!origin || allowedOrigins?.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        console.log("Origin rejected:", origin);
         callback(new Error(`Origin ${origin} not allowed by CORS`));
       }
     },
@@ -90,6 +90,11 @@ const agentLimiter = rateLimit({
 });
 
 app.use("/api/v1/agent", agentLimiter, agentRouter);
+
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.error(err.message);
+  res.status(500).json({ error: "Internal server error" });
+});
 
 app.listen(port, () => {
   console.log(`App listening on http://localhost:${port}`);
