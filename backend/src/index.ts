@@ -93,7 +93,7 @@ app.use("/api/v1/agent", agentLimiter, agentRouter);
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.message);
-  res.status(500).json({ error: "Internal server error" });
+  res.status(500).json({ error: "Server error" });
 });
 
 app.listen(port, () => {
